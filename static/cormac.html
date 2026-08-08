@@ -171,45 +171,75 @@
   .jcard .jsay{font-family:'Courier New',monospace; font-size:.68rem; color:var(--muted); margin-top:3px;}
   .jcard .jm{font-style:italic; font-size:.8rem; color:var(--jc); margin-top:5px;}
 
-  /* CH · The Local Collection (region crate of vinyl records) */
-  .lc-tabs{display:flex; gap:6px; flex-wrap:wrap; justify-content:center; margin-bottom:11px;}
-  .lctab{border:2px solid var(--line); background:#fff; border-radius:999px; padding:5px 14px; cursor:pointer; font:inherit; font-weight:700; font-size:.78rem; color:var(--ink); transition:.2s;}
+  /* CH · The Local Collection — compact musical record crate */
+  .lc-tabs{display:flex; gap:6px; flex-wrap:wrap; justify-content:center; margin-bottom:9px;}
+  .lctab{border:2px solid var(--line); background:#fff; border-radius:999px; padding:4px 13px; cursor:pointer; font:inherit; font-weight:700; font-size:.76rem; color:var(--ink); transition:.2s;}
   .lctab:hover{transform:translateY(-2px);} .lctab.on{border-color:var(--local); background:var(--local-soft); color:var(--local2);}
-  .lc-locktag{text-align:center; font-size:.72rem; font-weight:700; margin-bottom:10px;}
-  .lc-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:11px;}
-  @media(max-width:560px){.lc-grid{grid-template-columns:repeat(2,1fr);}}
-  .lc-rec{background:#fff; border:1px solid var(--line); border-radius:12px; padding:11px 10px 12px; text-align:center;
-    box-shadow:0 3px 10px rgba(150,120,190,.08);}
-  .lc-disc{width:clamp(38px,5vw,48px); height:auto; display:block; margin:0 auto 6px;}
-  .lc-nm{font-family:Georgia,serif; font-weight:800; font-size:1.05rem; line-height:1; color:var(--ink);}
-  .lc-say{font-family:'Courier New',monospace; font-size:.62rem; color:var(--muted); margin-top:3px;}
-  .lc-mean{font-style:italic; font-size:.76rem; margin-top:4px; line-height:1.25;}
-  .lc-cn{font-size:.6rem; color:var(--muted); font-weight:700; margin-top:4px;}
-
-  /* CH · One of a Kind (rarest single-country pressings) */
-  .ook-hero{margin-bottom:12px;}
-  .ook-hero-card{position:relative; display:flex; align-items:center; gap:clamp(12px,2vw,22px);
-    background:linear-gradient(135deg,#241b33,#3a2b52); border-radius:16px; padding:clamp(14px,2.4vh,22px) clamp(16px,2.4vw,26px);
-    color:#fff; box-shadow:0 12px 30px rgba(90,60,140,.3);}
-  .ook-badge{position:absolute; top:-11px; left:50%; transform:translateX(-50%); white-space:nowrap;
-    background:var(--gold); color:#4a3300; font-weight:800; font-size:.56rem; letter-spacing:1px; padding:4px 12px; border-radius:999px;
-    box-shadow:0 4px 12px rgba(240,178,62,.4);}
-  .ook-disc{width:clamp(64px,10vw,96px); height:auto; flex:0 0 auto; filter:drop-shadow(0 4px 10px rgba(0,0,0,.35)); animation:spin 8s linear infinite;}
+  .lc-locktag{text-align:center; font-size:.7rem; font-weight:700; margin-bottom:8px;}
+  /* the crate: a dark shelf holding record cards in a row */
+  .lc-crate-box{background:linear-gradient(160deg,#241b33,#332648); border-radius:14px; padding:12px 12px 10px;
+    box-shadow:inset 0 3px 12px rgba(0,0,0,.3);}
+  .lc-grid{display:grid; grid-template-columns:repeat(6,1fr); gap:8px;}
+  @media(max-width:760px){.lc-grid{grid-template-columns:repeat(3,1fr);}}
+  .lc-rec{background:linear-gradient(150deg,#fdf8ee,#f3ecfa); border-radius:9px; padding:9px 6px 10px; text-align:center;
+    box-shadow:0 4px 10px rgba(0,0,0,.25); transition:transform .18s;}
+  .lc-rec:hover{transform:translateY(-4px);}
+  .lc-rec:hover .lc-disc{animation:spin 1.4s linear infinite;}
+  .lc-disc{width:clamp(34px,4vw,44px); height:auto; display:block; margin:0 auto 5px;}
+  .lc-nm{font-family:Georgia,serif; font-weight:800; font-size:.92rem; line-height:1; color:var(--ink);}
+  .lc-say{font-family:'Courier New',monospace; font-size:.56rem; color:var(--muted); margin-top:2px;}
+  .lc-mean{font-style:italic; font-size:.66rem; margin-top:3px; line-height:1.2;}
+  .lc-cn{font-size:.54rem; color:var(--muted); font-weight:700; margin-top:3px;}
   @keyframes spin{from{transform:rotate(0);}to{transform:rotate(360deg);}}
-  .ook-hero-info{flex:1; min-width:0; text-align:left;}
-  .ook-hero-nm{font-family:Georgia,serif; font-weight:800; font-size:clamp(1.8rem,4vw,2.6rem); line-height:1;}
-  .ook-hero-country{color:#c9b6e6; font-size:.8rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-top:2px;}
-  .ook-hero-mean{color:#d9cdec; font-style:italic; font-size:.82rem; margin-top:6px;}
-  .ook-hero-cn{margin-top:8px; font-size:.82rem; color:#efe8f7;}
-  .ook-hero-cn b{font-family:'Fraunces',serif; color:var(--gold); font-size:1.15rem;}
-  .ook-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:10px;}
-  @media(max-width:560px){.ook-grid{grid-template-columns:repeat(2,1fr);}}
-  .ook-rec{background:#fff; border:1px solid var(--line); border-left:4px solid var(--local); border-radius:11px; padding:10px 12px; text-align:center;
-    box-shadow:0 3px 10px rgba(150,120,190,.07);}
-  .ook-nm{font-family:Georgia,serif; font-weight:800; font-size:1.05rem; color:var(--ink); line-height:1;}
-  .ook-country{font-size:.62rem; color:var(--muted); text-transform:uppercase; letter-spacing:.5px; margin-top:2px; font-weight:700;}
-  .ook-mean{font-style:italic; font-size:.72rem; color:#5a6472; margin-top:4px; line-height:1.25;}
-  .ook-cn{font-size:.62rem; color:var(--local2); font-weight:800; margin-top:4px;}
+
+  /* Alexa / Amazon-themed did-you-know */
+  .did-know.alexa{position:relative; margin-top:10px; background:linear-gradient(135deg,#eaf6ff,#e2f0ff);
+    border:1.5px solid #7bc4f0; border-left:4px solid #ff9900; border-radius:12px; padding:11px 15px 11px 46px;
+    font-size:clamp(.74rem,1.3vw,.84rem); color:#33404f; line-height:1.4; box-shadow:0 5px 16px rgba(35,120,190,.12);}
+  .did-know.alexa b{color:#146eb4;}
+  .did-know.alexa .alexa-ring{position:absolute; left:12px; top:50%; transform:translateY(-50%);
+    width:22px; height:22px; border-radius:50%; border:3px solid #00caff; box-shadow:0 0 0 3px rgba(0,202,255,.25);
+    animation:alexaPulse 2s ease-in-out infinite;}
+  @keyframes alexaPulse{0%,100%{box-shadow:0 0 0 3px rgba(0,202,255,.25);}50%{box-shadow:0 0 0 6px rgba(0,202,255,.10);}}
+
+  /* CH · One of a Kind — a museum display of rare masters (no vinyl; spotlit plinths) */
+  .ook-hero{margin-bottom:10px;}
+  .ook-hero-card{position:relative; display:flex; align-items:center; gap:clamp(12px,2vw,20px);
+    background:radial-gradient(120% 140% at 20% 0%, #3a2b52 0%, #201730 70%); border-radius:16px;
+    padding:clamp(12px,2vh,18px) clamp(16px,2.2vw,24px); color:#fff; box-shadow:0 12px 30px rgba(90,60,140,.3); overflow:hidden;}
+  /* museum spotlight cone behind the hero */
+  .ook-hero-card::before{content:""; position:absolute; top:-40px; left:8%; width:120px; height:180px;
+    background:linear-gradient(180deg, rgba(255,235,170,.30), rgba(255,235,170,0)); transform:rotate(14deg); pointer-events:none;}
+  .ook-badge{position:absolute; top:-11px; left:50%; transform:translateX(-50%); white-space:nowrap;
+    background:var(--gold); color:#4a3300; font-weight:800; font-size:.55rem; letter-spacing:1px; padding:4px 12px; border-radius:999px;
+    box-shadow:0 4px 12px rgba(240,178,62,.4); z-index:2;}
+  /* the hero 'exhibit': a framed gold plaque, not a disc */
+  .ook-plaque{position:relative; z-index:1; flex:0 0 auto; width:clamp(84px,12vw,120px); padding:clamp(10px,1.6vh,16px) 10px;
+    background:linear-gradient(150deg,#f7d774,#e0a92e); border:3px solid #fff2cf; border-radius:10px; text-align:center;
+    box-shadow:0 8px 20px rgba(0,0,0,.4);}
+  .ook-plaque .star{font-size:1.5rem; line-height:1;}
+  .ook-plaque .lbl{font-size:.5rem; font-weight:800; letter-spacing:.6px; color:#5a3d00; margin-top:3px; text-transform:uppercase;}
+  .ook-hero-info{flex:1; min-width:0; text-align:left; z-index:1;}
+  .ook-hero-nm{font-family:Georgia,serif; font-weight:800; font-size:clamp(1.6rem,3.6vw,2.4rem); line-height:1;}
+  .ook-hero-country{color:#c9b6e6; font-size:.76rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-top:2px;}
+  .ook-hero-mean{color:#d9cdec; font-style:italic; font-size:.78rem; margin-top:5px;}
+  .ook-hero-cn{margin-top:7px; font-size:.8rem; color:#efe8f7;}
+  .ook-hero-cn b{font-family:'Fraunces',serif; color:var(--gold); font-size:1.1rem;}
+  /* supporting rare names: spotlit plinths in a glass case row */
+  .ook-case{display:grid; grid-template-columns:repeat(6,1fr); gap:8px; background:linear-gradient(180deg,#2a2036,#1c1528);
+    border:1px solid #3a2f4a; border-radius:14px; padding:12px 10px 10px;}
+  @media(max-width:640px){.ook-case{grid-template-columns:repeat(3,1fr);}}
+  .ook-ex{position:relative; text-align:center; padding-top:6px;}
+  /* spotlight beam over each plinth */
+  .ook-ex::before{content:""; position:absolute; top:-6px; left:50%; transform:translateX(-50%);
+    width:0; height:0; border-left:16px solid transparent; border-right:16px solid transparent;
+    border-bottom:34px solid rgba(255,236,170,.14);}
+  .ook-ex .disc{display:none;}
+  .ook-plinth{position:relative; z-index:1; background:linear-gradient(150deg,#f7d774,#dca02a); border-radius:7px;
+    padding:8px 5px 9px; box-shadow:0 5px 12px rgba(0,0,0,.4);}
+  .ook-nm{font-family:Georgia,serif; font-weight:800; font-size:.82rem; color:#3a2600; line-height:1;}
+  .ook-country{font-size:.52rem; color:#6a4b12; text-transform:uppercase; letter-spacing:.4px; margin-top:2px; font-weight:800;}
+  .ook-cn{font-size:.56rem; color:#5a3d00; font-weight:800; margin-top:2px;}
 
   /* CH · fame fades (Arya vs Khaleesi) */
   /* CH · fame fades — one-hit-wonder timeline */
@@ -310,7 +340,7 @@
             <div class="p-sub">Tap a region to flip through its crate. Every record carries a meaning and rarely leaves home.</div>
             <div class="lc-tabs" id="lcTabs"></div>
             <div class="lc-crate" id="lcCrate"></div>
-            <div class="did-know">💡 <b>Did you know?</b> Some names get erased from the outside. <b>Alexa</b> fell <b>92%</b> after Amazon's Echo took the name in 2014, and <b>Siri</b> dropped <b>93%</b> once Apple claimed it. A rooted local name belongs to no corporation.</div>
+            <div class="did-know alexa"><span class="alexa-ring"></span><b>"Alexa, why did my name disappear?"</b> After Amazon's Echo launched in 2014, the name <b>Alexa</b> fell <b>92%</b> (and <b>Siri</b> dropped <b>93%</b> once Apple claimed it). A global name can be overwritten by a gadget overnight, a rooted local name belongs to no corporation.</div>
             <div class="p-cap">Freedom, radiance, a star, the great tree. Say one of these and a stranger knows your street. <b>Local isn't a compromise, it's a deeper catalogue.</b></div>
           </div>
 
@@ -458,14 +488,14 @@ function lcShow(k){
   const[col,locked,list]=LC[k];
   document.getElementById('lcCrate').innerHTML =
     `<div class="lc-locktag" style="color:${col}">${k} · ${locked} · rarely leaves home</div>`
-    + `<div class="lc-grid">` + list.map(([n,say,mean,cn])=>
-      `<div class="lc-rec" style="--jc:${col}">
+    + `<div class="lc-crate-box"><div class="lc-grid">` + list.map(([n,say,mean,cn])=>
+      `<div class="lc-rec">
         ${lcVinyl(col)}
         <div class="lc-nm">${n}</div>
         <div class="lc-say">${say}</div>
         <div class="lc-mean" style="color:${col}">"${mean}"</div>
         <div class="lc-cn">cn ${cn}</div>
-      </div>`).join('') + `</div>`;
+      </div>`).join('') + `</div></div>`;
 }
 lcShow('Ireland');
 
@@ -481,8 +511,8 @@ const OOK=[
 ];
 document.getElementById('ookHero').innerHTML =
   `<div class="ook-hero-card">
-     <div class="ook-badge">💎 RAREST PRESSING IN THE CATALOGUE</div>
-     <svg viewBox="0 0 100 100" class="ook-disc"><circle cx="50" cy="50" r="48" fill="#1a1a2e"/><circle cx="50" cy="50" r="34" fill="none" stroke="#4a4a68" stroke-width="1.3"/><circle cx="50" cy="50" r="24" fill="none" stroke="#4a4a68" stroke-width="1.3"/><circle cx="50" cy="50" r="15" fill="#8a5bb0"/><circle cx="50" cy="50" r="4" fill="#1a1a2e"/></svg>
+     <div class="ook-badge">💎 RAREST NAME IN THE CATALOGUE</div>
+     <div class="ook-plaque"><div class="star">🏆</div><div class="lbl">One of<br>One</div></div>
      <div class="ook-hero-info">
        <div class="ook-hero-nm">${OOK_HERO.name}</div>
        <div class="ook-hero-country">${OOK_HERO.country} only</div>
@@ -490,13 +520,15 @@ document.getElementById('ookHero').innerHTML =
        <div class="ook-hero-cn"><b>${OOK_HERO.cn}×</b> more concentrated at home than anywhere else</div>
      </div>
    </div>`;
-document.getElementById('ookGrid').innerHTML = OOK.map(o=>
-  `<div class="ook-rec">
-     <div class="ook-nm">${o.name}</div>
-     <div class="ook-country">${o.country}</div>
-     <div class="ook-mean">"${o.mean}"</div>
-     <div class="ook-cn">cn ${o.cn}</div>
-   </div>`).join('');
+document.getElementById('ookGrid').innerHTML =
+  `<div class="ook-case">` + OOK.map(o=>
+  `<div class="ook-ex">
+     <div class="ook-plinth">
+       <div class="ook-nm">${o.name}</div>
+       <div class="ook-country">${o.country}</div>
+       <div class="ook-cn">cn ${o.cn}</div>
+     </div>
+   </div>`).join('') + `</div>`;
 
 /* ============ CH05 · fame fades (Arya vs Khaleesi) ============ */
 function fameCard(lab,name,root,seq,color,peak,now,drop,stat){
