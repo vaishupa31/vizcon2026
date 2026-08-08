@@ -171,6 +171,46 @@
   .jcard .jsay{font-family:'Courier New',monospace; font-size:.68rem; color:var(--muted); margin-top:3px;}
   .jcard .jm{font-style:italic; font-size:.8rem; color:var(--jc); margin-top:5px;}
 
+  /* CH · The Local Collection (region crate of vinyl records) */
+  .lc-tabs{display:flex; gap:6px; flex-wrap:wrap; justify-content:center; margin-bottom:11px;}
+  .lctab{border:2px solid var(--line); background:#fff; border-radius:999px; padding:5px 14px; cursor:pointer; font:inherit; font-weight:700; font-size:.78rem; color:var(--ink); transition:.2s;}
+  .lctab:hover{transform:translateY(-2px);} .lctab.on{border-color:var(--local); background:var(--local-soft); color:var(--local2);}
+  .lc-locktag{text-align:center; font-size:.72rem; font-weight:700; margin-bottom:10px;}
+  .lc-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:11px;}
+  @media(max-width:560px){.lc-grid{grid-template-columns:repeat(2,1fr);}}
+  .lc-rec{background:#fff; border:1px solid var(--line); border-radius:12px; padding:11px 10px 12px; text-align:center;
+    box-shadow:0 3px 10px rgba(150,120,190,.08);}
+  .lc-disc{width:clamp(38px,5vw,48px); height:auto; display:block; margin:0 auto 6px;}
+  .lc-nm{font-family:Georgia,serif; font-weight:800; font-size:1.05rem; line-height:1; color:var(--ink);}
+  .lc-say{font-family:'Courier New',monospace; font-size:.62rem; color:var(--muted); margin-top:3px;}
+  .lc-mean{font-style:italic; font-size:.76rem; margin-top:4px; line-height:1.25;}
+  .lc-cn{font-size:.6rem; color:var(--muted); font-weight:700; margin-top:4px;}
+
+  /* CH · One of a Kind (rarest single-country pressings) */
+  .ook-hero{margin-bottom:12px;}
+  .ook-hero-card{position:relative; display:flex; align-items:center; gap:clamp(12px,2vw,22px);
+    background:linear-gradient(135deg,#241b33,#3a2b52); border-radius:16px; padding:clamp(14px,2.4vh,22px) clamp(16px,2.4vw,26px);
+    color:#fff; box-shadow:0 12px 30px rgba(90,60,140,.3);}
+  .ook-badge{position:absolute; top:-11px; left:50%; transform:translateX(-50%); white-space:nowrap;
+    background:var(--gold); color:#4a3300; font-weight:800; font-size:.56rem; letter-spacing:1px; padding:4px 12px; border-radius:999px;
+    box-shadow:0 4px 12px rgba(240,178,62,.4);}
+  .ook-disc{width:clamp(64px,10vw,96px); height:auto; flex:0 0 auto; filter:drop-shadow(0 4px 10px rgba(0,0,0,.35)); animation:spin 8s linear infinite;}
+  @keyframes spin{from{transform:rotate(0);}to{transform:rotate(360deg);}}
+  .ook-hero-info{flex:1; min-width:0; text-align:left;}
+  .ook-hero-nm{font-family:Georgia,serif; font-weight:800; font-size:clamp(1.8rem,4vw,2.6rem); line-height:1;}
+  .ook-hero-country{color:#c9b6e6; font-size:.8rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-top:2px;}
+  .ook-hero-mean{color:#d9cdec; font-style:italic; font-size:.82rem; margin-top:6px;}
+  .ook-hero-cn{margin-top:8px; font-size:.82rem; color:#efe8f7;}
+  .ook-hero-cn b{font-family:'Fraunces',serif; color:var(--gold); font-size:1.15rem;}
+  .ook-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:10px;}
+  @media(max-width:560px){.ook-grid{grid-template-columns:repeat(2,1fr);}}
+  .ook-rec{background:#fff; border:1px solid var(--line); border-left:4px solid var(--local); border-radius:11px; padding:10px 12px; text-align:center;
+    box-shadow:0 3px 10px rgba(150,120,190,.07);}
+  .ook-nm{font-family:Georgia,serif; font-weight:800; font-size:1.05rem; color:var(--ink); line-height:1;}
+  .ook-country{font-size:.62rem; color:var(--muted); text-transform:uppercase; letter-spacing:.5px; margin-top:2px; font-weight:700;}
+  .ook-mean{font-style:italic; font-size:.72rem; color:#5a6472; margin-top:4px; line-height:1.25;}
+  .ook-cn{font-size:.62rem; color:var(--local2); font-weight:800; margin-top:4px;}
+
   /* CH · fame fades (Arya vs Khaleesi) */
   /* CH · fame fades — one-hit-wonder timeline */
   .ohw-line{position:relative; margin:6px 0 4px; padding:0 2%;}
@@ -265,23 +305,23 @@
 
           <!-- PANEL 1 · cultural passwords -->
           <div class="panel" data-p="1">
-            <div class="p-cormac">"Every place has names that instantly say where you are from. They are not failures to travel, they are passwords."</div>
-            <div class="p-title">Cultural Passwords</div>
-            <div class="p-sub">Names that never leave home, and that is exactly why they matter. Tap a country's crate.</div>
-            <div class="pw-tabs" id="pwTabs"></div>
-            <div class="pw-box" id="pwBox"></div>
-            <div class="did-know">💡 <b>Did you know?</b> Some names get erased from the outside. <b>Alexa</b> fell <b>92%</b> after Amazon's Echo took the name in 2014, and <b>Siri</b> dropped <b>93%</b> once Apple claimed it. A global name can be overwritten by a gadget overnight. A rooted local name belongs to no corporation.</div>
-            <div class="p-cap">Say one of these and a stranger knows your street. <b>That belonging is the whole point,</b> a name that carries a home inside it.</div>
+            <div class="p-cormac">"Local doesn't mean short on choice. Every region has a crate full of names, and each one actually means something. Pick a region, flip through the records."</div>
+            <div class="p-title">The Local Collection</div>
+            <div class="p-sub">Tap a region to flip through its crate. Every record carries a meaning and rarely leaves home.</div>
+            <div class="lc-tabs" id="lcTabs"></div>
+            <div class="lc-crate" id="lcCrate"></div>
+            <div class="did-know">💡 <b>Did you know?</b> Some names get erased from the outside. <b>Alexa</b> fell <b>92%</b> after Amazon's Echo took the name in 2014, and <b>Siri</b> dropped <b>93%</b> once Apple claimed it. A rooted local name belongs to no corporation.</div>
+            <div class="p-cap">Freedom, radiance, a star, the great tree. Say one of these and a stranger knows your street. <b>Local isn't a compromise, it's a deeper catalogue.</b></div>
           </div>
 
-          <!-- PANEL 2 · the local jukebox (regional options with meanings) -->
+          <!-- PANEL 2 · One of a Kind (rarest single-country pressings) -->
           <div class="panel" data-p="2">
-            <div class="p-cormac">"And do not think local means short on choice. Every region has its own jukebox full of beautiful names, and each one actually means something. Pick a region, take your pick."</div>
-            <div class="p-title">The Local Jukebox</div>
-            <div class="p-sub">You are not choosing between one local name and the whole world. There are shelves of them. Tap a region.</div>
-            <div class="jb-tabs" id="jbTabs"></div>
-            <div class="jb-grid" id="jbGrid"></div>
-            <div class="p-cap">Freedom, radiance, a star, the great tree, every one of these carries a <b>meaning</b>, not just a sound. <b>Local isn't a compromise, it's a deeper catalogue.</b></div>
+            <div class="p-cormac">"And a few of these? They exist in one country and nowhere else on Earth. Not a hit, not a re-press, a single, hand-cut record."</div>
+            <div class="p-title">One of a Kind</div>
+            <div class="p-sub">The rarest pressings in the whole catalogue, names almost no one outside home has ever recorded.</div>
+            <div class="ook-hero" id="ookHero"></div>
+            <div class="ook-grid" id="ookGrid"></div>
+            <div class="p-cap">A countryness in the <b>thousands</b> means the name is effectively a one-country original. <b>You cannot buy this record anywhere else.</b></div>
           </div>
 
           <!-- PANEL 3 · fame fades, roots don't -->
@@ -317,10 +357,10 @@
           <span class="ico">🎤</span><span class="ct"><span class="cn">Can You Say This?</span><span class="cd">easy for those who belong</span></span>
           <span class="eq"><i></i><i></i><i></i><i></i></span><span class="num">01</span></button>
         <button class="channel" data-ch="1" onclick="setCh(1)">
-          <span class="ico">🔑</span><span class="ct"><span class="cn">Cultural Passwords</span><span class="cd">names that say home</span></span>
+          <span class="ico">🎶</span><span class="ct"><span class="cn">The Local Collection</span><span class="cd">a crate of names, each a meaning</span></span>
           <span class="eq"><i></i><i></i><i></i><i></i></span><span class="num">02</span></button>
         <button class="channel" data-ch="2" onclick="setCh(2)">
-          <span class="ico">🎶</span><span class="ct"><span class="cn">The Local Jukebox</span><span class="cd">so many options, each a meaning</span></span>
+          <span class="ico">💎</span><span class="ct"><span class="cn">One of a Kind</span><span class="cd">the rarest pressings of all</span></span>
           <span class="eq"><i></i><i></i><i></i><i></i></span><span class="num">03</span></button>
         <button class="channel" data-ch="3" onclick="setCh(3)">
           <span class="ico">🌳</span><span class="ct"><span class="cn">Fame Fades, Roots Don't</span><span class="cd">the one-hit rebuttal</span></span>
@@ -344,7 +384,7 @@
 
 <script>
 /* ============ channel switching ============ */
-const NOW=['Can You Say This?','Cultural Passwords','The Local Jukebox','Fame Fades, Roots Don\'t','Cormac\'s Wishlist'];
+const NOW=['Can You Say This?','The Local Collection','One of a Kind','Fame Fades, Roots Don\'t','Cormac\'s Wishlist'];
 const N=NOW.length;
 let cur=0;
 function setCh(i){
@@ -386,57 +426,77 @@ function sayReveal(){const d=SAY[sayIdx]; playSay(d.file); const b=document.getE
 function sayNext(){sayIdx=(sayIdx+1)%SAY.length; sayRender();}
 sayRender();
 
-/* ============ CH02 · cultural passwords ============ */
-const PW={
-  Ireland:['Ireland','55% locked',[['Aoife',88],['Sadhbh',905],['Eoin',74],['Naoise',1086],['Laoise',612],['Aoibhínn',589]]],
-  Scotland:['Scotland','52% locked',[['Innes',1187],['Ruairidh',976],['Struan',540],['Murdo',521],['Munro',654],['Breagha',489]]],
-  'N. Ireland':['Northern Ireland','65% locked',[['Éireann',1414],['Roisé',1373],['Dáithí',892],['Ruadhán',756],['Cianán',623],['Odhrán',498]]],
-  USA:['USA','44% locked',[['Kaylani',312],['Tadeo',245],['Itzel',198],['Anahi',287],['Malani',176],['Ximena',210]]],
-  Canada:['Canada','36% locked',[['Édouard',1106],['Éloi',894],['Ludovic',756],['Frédérique',623],['Noélie',534],['Océane',445]]]
+/* ============ CH02 · The Local Collection (region crate: names + meaning, as vinyl) ============ */
+/* each entry: [name, pronunciation, meaning, countryness] */
+const LC={
+  Ireland:['#3fa787','55% locked',[
+    ['Saoirse','SEER-sha','freedom',214],['Aoife','EE-fa','beauty, radiance',88],
+    ['Niamh','NEEV','bright, radiant',60],['Sadhbh','SIVE','sweet, goodness',905],
+    ['Oisín','uh-SHEEN','little deer',176],['Naoise','NEE-sha','warrior of legend',1086]]],
+  Scotland:['#8a5bb0','52% locked',[
+    ['Ailsa','AIL-sa','elf victory',233],['Innes','IN-iss','from the island',1187],
+    ['Ruairidh','ROO-ree','red king',976],['Iona','eye-OH-na','the island',188],
+    ['Struan','STROO-an','stream',540],['Morag','MOR-ak','great, sun',3212]]],
+  Wales:['#3f8fca','35% locked',[
+    ['Ffion','FEE-on','foxglove',1761],['Seren','SEH-ren','star',612],
+    ['Cerys','KEH-riss','love',438],['Rhys','REESS','ardour',96],
+    ['Eluned','el-IN-ed','idol, image',389],['Dylan','DUH-lan','son of the sea',52]]],
+  'Māori NZ':['#f0a020','36% locked',[
+    ['Aroha','a-ROH-ha','love',13713],['Nikau','NEE-kow','native palm',29620],
+    ['Kauri','KOW-ree','the great tree',10106],['Manaia','ma-NYE-a','guardian spirit',8319],
+    ['Tui','TOO-ee','native songbird',10078],['Ataahua','a-taa-HOO-a','beautiful',742]]],
+  Québec:['#e8788c','36% locked',[
+    ['Frédérique','fray-day-REEK','peaceful ruler',10588],['Océane','oh-say-AN','of the ocean',445],
+    ['Édouard','ay-DWAR','wealthy guard',1106],['Ludovic','loo-doh-VEEK','famed warrior',756],
+    ['Noélie','noh-ay-LEE','Christmas',534],['Éloi','ay-LWA','chosen one',894]]]
 };
-const pwColors={Ireland:'#3fa787',Scotland:'#8a5bb0','N. Ireland':'#4ab0c8',USA:'#3f8fca',Canada:'#e8788c'};
-document.getElementById('pwTabs').innerHTML=Object.keys(PW).map((k,i)=>
-  `<button class="ptab${i===0?' on':''}" data-k="${k}" onclick="pwSel(this)">${k}</button>`).join('');
-function pwSel(btn){document.querySelectorAll('#pwTabs .ptab').forEach(c=>c.classList.remove('on'));btn.classList.add('on');pwShow(btn.dataset.k);}
-function pwShow(k){
-  const[country,locked,list]=PW[k]; const col=pwColors[k];
-  document.getElementById('pwBox').innerHTML=`<div class="pw-head"><span class="pc" style="color:${col}">${country}</span><span class="pl">${locked} · rarely leaves home</span></div>
-    <div class="pw-list">${list.map(([n,s])=>`<div class="pw-row"><span class="pn">${n}</span><span class="ps">cn ${s}</span></div>`).join('')}</div>`;
+document.getElementById('lcTabs').innerHTML=Object.keys(LC).map((k,i)=>
+  `<button class="lctab${i===0?' on':''}" data-k="${k}" onclick="lcSel(this)">${k}</button>`).join('');
+function lcSel(btn){document.querySelectorAll('#lcTabs .lctab').forEach(c=>c.classList.remove('on'));btn.classList.add('on');lcShow(btn.dataset.k);}
+function lcVinyl(col){return `<svg viewBox="0 0 100 100" class="lc-disc"><circle cx="50" cy="50" r="48" fill="#1a1a2e"/><circle cx="50" cy="50" r="34" fill="none" stroke="#3a3a52" stroke-width="1.2"/><circle cx="50" cy="50" r="24" fill="none" stroke="#3a3a52" stroke-width="1.2"/><circle cx="50" cy="50" r="15" fill="${col}"/><circle cx="50" cy="50" r="4" fill="#1a1a2e"/></svg>`;}
+function lcShow(k){
+  const[col,locked,list]=LC[k];
+  document.getElementById('lcCrate').innerHTML =
+    `<div class="lc-locktag" style="color:${col}">${k} · ${locked} · rarely leaves home</div>`
+    + `<div class="lc-grid">` + list.map(([n,say,mean,cn])=>
+      `<div class="lc-rec" style="--jc:${col}">
+        ${lcVinyl(col)}
+        <div class="lc-nm">${n}</div>
+        <div class="lc-say">${say}</div>
+        <div class="lc-mean" style="color:${col}">"${mean}"</div>
+        <div class="lc-cn">cn ${cn}</div>
+      </div>`).join('') + `</div>`;
 }
-pwShow('Ireland');
+lcShow('Ireland');
 
-/* ============ CH04 · The Local Jukebox (regional options + meanings) ============ */
-const JUKE={
-  Ireland:['#3fa787',[
-    ['Saoirse','SEER-sha','freedom'],['Aoife','EE-fa','beauty, radiance'],
-    ['Niamh','NEEV','bright, radiant'],['Fionn','FYUN','fair, white'],
-    ['Oisín','uh-SHEEN','little deer'],['Sadhbh','SIVE','sweet, goodness']]],
-  Scotland:['#8a5bb0',[
-    ['Ailsa','AIL-sa','elf victory'],['Innes','IN-iss','from the island'],
-    ['Ruairidh','ROO-ree','red king'],['Iona','eye-OH-na','the island'],
-    ['Struan','STROO-an','stream'],['Mhairi','VAH-ree','beloved']]],
-  Wales:['#3f8fca',[
-    ['Ffion','FEE-on','foxglove'],['Rhys','REESS','ardour, enthusiasm'],
-    ['Seren','SEH-ren','star'],['Cerys','KEH-riss','love'],
-    ['Eluned','el-IN-ed','idol, image'],['Dylan','DUH-lan','son of the sea']]],
-  'Māori NZ':['#f0a020',[
-    ['Nikau','NEE-kow','native palm'],['Manaia','ma-NYE-a','guardian spirit'],
-    ['Kauri','KOW-ree','the great tree'],['Aroha','a-ROH-ha','love'],
-    ['Ataahua','a-taa-HOO-a','beautiful'],['Marama','ma-RAH-ma','moon, light']]],
-  'Québec':['#e8788c',[
-    ['Éloi','ay-LWA','chosen one'],['Océane','oh-say-AN','of the ocean'],
-    ['Frédérique','fray-day-REEK','peaceful ruler'],['Ludovic','loo-doh-VEEK','famed warrior'],
-    ['Noélie','no-ay-LEE','born at Christmas'],['Édouard','ay-DWAR','wealthy guardian']]]
-};
-document.getElementById('jbTabs').innerHTML=Object.keys(JUKE).map((k,i)=>
-  `<button class="jtab${i===0?' on':''}" data-k="${k}" onclick="jbSel(this)">${k}</button>`).join('');
-function jbSel(btn){document.querySelectorAll('#jbTabs .jtab').forEach(c=>c.classList.remove('on'));btn.classList.add('on');jbShow(btn.dataset.k);}
-function jbShow(k){
-  const[col,list]=JUKE[k];
-  document.getElementById('jbGrid').innerHTML=list.map(([n,say,mean])=>`<div class="jcard" style="--jc:${col}">
-    <div class="jn">${n}</div><div class="jsay">${say}</div><div class="jm">“${mean}”</div></div>`).join('');
-}
-jbShow('Ireland');
+/* ============ CH03 · One of a Kind (rarest single-country pressings) ============ */
+const OOK_HERO={name:'Raewyn', country:'New Zealand', cn:'168,730', mean:'a mid-century coined name, born and kept in New Zealand'};
+const OOK=[
+  {name:'Brid', country:'Ireland', cn:'35,001', mean:'from Bríd (Brigid) · goddess, saint'},
+  {name:'Nikau', country:'New Zealand', cn:'29,620', mean:'the native palm tree'},
+  {name:'Delwyn', country:'New Zealand', cn:'24,515', mean:'neat and blessed (Welsh-Māori)'},
+  {name:'Triona', country:'Ireland', cn:'13,983', mean:'short for Caitríona'},
+  {name:'Frédérique', country:'Québec', cn:'10,588', mean:'peaceful ruler'},
+  {name:'Kauri', country:'New Zealand', cn:'10,106', mean:'the great forest tree'}
+];
+document.getElementById('ookHero').innerHTML =
+  `<div class="ook-hero-card">
+     <div class="ook-badge">💎 RAREST PRESSING IN THE CATALOGUE</div>
+     <svg viewBox="0 0 100 100" class="ook-disc"><circle cx="50" cy="50" r="48" fill="#1a1a2e"/><circle cx="50" cy="50" r="34" fill="none" stroke="#4a4a68" stroke-width="1.3"/><circle cx="50" cy="50" r="24" fill="none" stroke="#4a4a68" stroke-width="1.3"/><circle cx="50" cy="50" r="15" fill="#8a5bb0"/><circle cx="50" cy="50" r="4" fill="#1a1a2e"/></svg>
+     <div class="ook-hero-info">
+       <div class="ook-hero-nm">${OOK_HERO.name}</div>
+       <div class="ook-hero-country">${OOK_HERO.country} only</div>
+       <div class="ook-hero-mean">${OOK_HERO.mean}</div>
+       <div class="ook-hero-cn"><b>${OOK_HERO.cn}×</b> more concentrated at home than anywhere else</div>
+     </div>
+   </div>`;
+document.getElementById('ookGrid').innerHTML = OOK.map(o=>
+  `<div class="ook-rec">
+     <div class="ook-nm">${o.name}</div>
+     <div class="ook-country">${o.country}</div>
+     <div class="ook-mean">"${o.mean}"</div>
+     <div class="ook-cn">cn ${o.cn}</div>
+   </div>`).join('');
 
 /* ============ CH05 · fame fades (Arya vs Khaleesi) ============ */
 function fameCard(lab,name,root,seq,color,peak,now,drop,stat){
