@@ -24,7 +24,7 @@
 
   .sheet{height:100vh; max-height:100vh; width:100%; display:flex; flex-direction:column;
     padding:clamp(10px,2.4vh,24px) clamp(14px,3vw,30px); overflow:hidden;}
-  .inner{flex:1; max-width:1180px; width:100%; margin:0 auto; display:flex; flex-direction:column; min-height:0;}
+  .inner{flex:1; max-width:1180px; width:100%; margin:0 auto; display:flex; flex-direction:column; min-height:0; justify-content:center; gap:clamp(6px,1.2vh,12px);}
 
   /* header */
   .head{text-align:center; flex:0 0 auto;}
@@ -34,7 +34,7 @@
   .lead strong{color:var(--ink);}
 
   /* body grid: anglosphere (left) · orchestra (right) */
-  .grid{flex:1; min-height:0; display:grid; grid-template-columns:1fr 1.05fr;
+  .grid{flex:0 1 auto; min-height:0; display:grid; grid-template-columns:1fr 1.05fr;
     gap:clamp(12px,1.8vw,22px); margin-top:clamp(8px,1.6vh,16px); align-items:stretch;}
   @media(max-width:980px){.grid{grid-template-columns:1fr;}}
 
@@ -71,22 +71,32 @@
   .o-foot b{color:var(--ink); font-style:normal;}
 
   /* ── quiz bar ── */
-  .quiz{flex:0 0 auto; margin-top:clamp(8px,1.6vh,16px); background:var(--panel); border:1px solid var(--line);
-    border-radius:18px; box-shadow:0 8px 24px rgba(120,150,190,.10); padding:clamp(12px,1.8vh,18px) clamp(14px,2vw,26px);
-    display:flex; align-items:center; gap:clamp(14px,2.4vw,32px); flex-wrap:wrap; justify-content:center;}
+  .quiz{flex:0 0 auto; margin-top:clamp(8px,1.6vh,16px);
+    background:linear-gradient(135deg,#fdf5e6,#fbefdb); border:2px solid var(--gold);
+    border-radius:18px; box-shadow:0 8px 22px rgba(240,178,62,.16); padding:clamp(12px,1.8vh,18px) clamp(14px,2vw,26px);
+    display:flex; align-items:center; gap:clamp(14px,2.4vw,32px); flex-wrap:wrap; justify-content:center;
+    position:relative;}
+  /* 'play along' ribbon so people don't miss it */
+  .quiz .q-badge{position:absolute; top:-11px; left:50%; transform:translateX(-50%); z-index:2;
+    background:var(--gold); color:#5a4300; font-weight:800; font-size:clamp(.56rem,1vw,.66rem); letter-spacing:1.2px;
+    text-transform:uppercase; padding:4px 12px; border-radius:999px; box-shadow:0 4px 12px rgba(240,178,62,.4);
+    display:flex; align-items:center; gap:5px; white-space:nowrap;}
+  .quiz .q-badge .dot{width:6px; height:6px; border-radius:50%; background:#5a4300;}
   .q-copy{text-align:center; flex:1 1 300px; min-width:240px;}
   .q-kicker{font-family:'Fraunces',serif; font-style:italic; color:var(--coral); font-size:clamp(.8rem,1.5vw,.98rem);}
   .q-h{font-family:'Caveat',cursive; font-size:clamp(1.5rem,3vw,2.1rem); line-height:1; color:var(--ink); margin:1px 0 2px;}
   .q-sub{font-size:clamp(.74rem,1.4vw,.88rem); color:#5a6472;}
   .q-opts{display:flex; gap:clamp(10px,1.6vw,16px); flex:0 0 auto; flex-wrap:wrap; justify-content:center;}
-  .q-btn{border:2px solid var(--line); background:#fff; border-radius:14px; padding:clamp(9px,1.4vh,13px) clamp(14px,1.8vw,22px);
-    cursor:pointer; font:inherit; text-align:center; transition:.2s; color:var(--ink); min-width:130px;}
-  .q-btn:hover{transform:translateY(-3px); border-color:var(--orange); box-shadow:0 8px 18px rgba(240,160,32,.16);}
+  .q-btn{border:2px solid var(--gold); background:#fff; border-radius:14px; padding:clamp(9px,1.4vh,13px) clamp(14px,1.8vw,22px);
+    cursor:pointer; font:inherit; text-align:center; transition:.2s; color:var(--ink); min-width:130px;
+    box-shadow:0 4px 12px rgba(240,178,62,.14);}
+  .q-btn:hover{transform:translateY(-3px); border-color:var(--orange); box-shadow:0 8px 18px rgba(240,160,32,.22);}
   .q-btn .qn{display:block; font-weight:800; font-size:clamp(1rem,1.9vw,1.2rem); line-height:1;}
   .q-btn .qd{display:block; font-size:clamp(.58rem,1.1vw,.68rem); color:var(--muted); margin-top:3px; font-weight:500;}
   .q-btn:disabled{cursor:default;} .q-btn.win{border-color:var(--sage); background:#eaf6ef;} .q-btn.lose{border-color:var(--coral); background:#fbe9ee;}
-  .q-res{flex:1 1 100%; text-align:center; font-size:clamp(.78rem,1.4vw,.92rem); color:#4a5568; line-height:1.45; margin-top:2px; display:none;}
-  .q-res.on{display:block;}
+  .q-res{flex:1 1 100%; text-align:center; font-size:clamp(.78rem,1.4vw,.92rem); color:#4a5568; line-height:1.45; margin-top:2px;
+    min-height:2.9em; opacity:0; transition:opacity .25s ease;}
+  .q-res.on{opacity:1;}
   .q-res b{color:var(--ink);}
 
   /* floating background notes + now-playing badge (shared) */
@@ -140,7 +150,7 @@
     <div class="head">
       <div class="chapter-tag">~ The Stage ~</div>
       <h1 class="title">Meet the Orchestra</h1>
-      <p class="lead">Before the duet begins, meet the stage it plays on. Every name in this story is measured across the <strong>Anglosphere</strong>, eight English-speaking countries that make up our orchestra. Some songs travel far and are sung across many of them, others stay close to one home. That is the whole argument ahead.</p>
+      <p class="lead">Before the duet begins, meet the stage it plays on. Every name in this story is measured across the <strong>Anglosphere</strong>, eight English-speaking countries that make up our orchestra.</p>
     </div>
 
     <div class="grid">
@@ -174,10 +184,11 @@
 
     <!-- ── warm-up quiz ── -->
     <div class="quiz">
+      <div class="q-badge"><span class="dot"></span>♪ Play along</div>
       <div class="q-copy">
         <div class="q-kicker">🎵 Can You Read the Charts?</div>
         <div class="q-h">🔍 Two Names. One Playlist. Zero Clues.</div>
-        <div class="q-sub">Before we dive in, a quick ear test. No hints, just instinct: which one made it onto the Global Playlist?</div>
+        <div class="q-sub">Before we dive in, a quick ear test. No hints, just instinct: <b>tap the name</b> you think made it onto the Global Playlist.</div>
       </div>
       <div class="q-opts">
         <button class="q-btn" id="qNevaeh" onclick="quiz('g')"><span class="qn">Nevaeh</span></button>
