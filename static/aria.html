@@ -26,7 +26,7 @@
   em.q{font-style:italic;}
 
   /* Aria lives in the page background, bottom-left, translucent */
-  .aria-bg{position:fixed; left:max(clamp(4px,2vw,40px), calc(50vw - 750px)); bottom:0; height:min(80vh,780px); width:auto; z-index:0;
+  .aria-bg{position:fixed; left:max(clamp(2px,1vw,24px), calc(50vw - 760px)); bottom:0; height:min(74vh,720px); width:auto; max-width:34vw; object-fit:contain; z-index:0;
     pointer-events:none; opacity:.95; filter:drop-shadow(0 10px 20px rgba(120,150,190,.22));}
   @media(max-width:1180px){.aria-bg{opacity:.85; height:min(72vh,700px); left:-20px;}}
   @media(max-width:900px){.aria-bg{opacity:.14;}}
@@ -127,13 +127,16 @@
   /* CH · declan/niamh + music-sheet phonetics */
   .two{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
   @media(max-width:520px){.two{grid-template-columns:1fr;}}
-  .sheet-card{border-radius:12px; padding:9px 15px; font-family:'Courier New',monospace;}
+  .sheet-card{border-radius:11px; padding:8px 12px; font-family:'Quicksand',sans-serif; display:flex; align-items:center; gap:10px;}
   .sheet-card.win{background:#eaf6ef; border:1px solid #a8dcc0;}
   .sheet-card.lose{background:#fbe9ee; border:1px solid #f0c0cf;}
-  .sheet-card .cat{font-size:.56rem; letter-spacing:1px; color:var(--muted);}
-  .sheet-card .nm{font-size:1.4rem; font-weight:800; margin:1px 0 0; font-family:'Quicksand',sans-serif;}
-  .sheet-card .ipa{font-style:italic; color:#5a6472; font-size:.82rem;}
-  .sheet-card .row{display:flex; justify-content:space-between; font-size:.74rem; margin-top:5px; color:#4a5568;}
+  .sheet-card .sc-main{flex:1; min-width:0;}
+  .sheet-card .nm{font-size:1.25rem; font-weight:800; line-height:1;}
+  .sheet-card .ipa{font-style:italic; color:#5a6472; font-size:.72rem; margin-top:1px;}
+  .sheet-card .cn-chip{flex:0 0 auto; text-align:center; background:rgba(0,0,0,.05); border-radius:9px; padding:4px 9px;}
+  .sheet-card .cn-chip .cv{font-family:'Fraunces',serif; font-weight:700; font-size:1rem; line-height:1; color:#c62828;}
+  .sheet-card .cn-chip .cl{font-size:.5rem; letter-spacing:.4px; text-transform:uppercase; color:var(--muted); margin-top:1px;}
+  .sheet-card .row{display:none;}
   .sheet-card .status{margin-top:6px; display:inline-block; padding:3px 10px; border-radius:20px; font-size:.56rem; font-weight:800; font-family:'Quicksand',sans-serif;}
   .sheet-card.win .status{background:var(--sage); color:#fff;}
   .sheet-card.lose .status{background:var(--coral); color:#fff;}
@@ -147,21 +150,30 @@
 
   /* CH · remix — turntable rows (original → remix) */
   .remix{display:flex; flex-direction:column; gap:12px;}
-  .rx-row{display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:clamp(8px,1.6vw,20px);
-    background:#fff; border:1px solid var(--line); border-radius:14px; padding:clamp(10px,1.5vh,15px) clamp(12px,1.8vw,20px);}
-  .rx-side{display:flex; align-items:center; gap:12px;}
+  .rx-row{display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:clamp(6px,1vw,12px);
+    background:#fff; border:1px solid var(--line); border-radius:12px; padding:clamp(7px,1vh,10px) clamp(9px,1.2vw,14px);}
+  .rx-side{display:flex; align-items:center; gap:9px;}
   .rx-side.remix{flex-direction:row-reverse; text-align:right;}
-  .rx-disc{position:relative; flex:0 0 auto; width:clamp(52px,7vw,66px);}
+  .rx-disc{position:relative; flex:0 0 auto; width:clamp(40px,4.5vw,50px);}
   .disc-svg{width:100%; display:block;}
   .rx-badge{position:absolute; bottom:-6px; left:50%; transform:translateX(-50%); font-size:.46rem; letter-spacing:.5px; font-weight:800;
     background:var(--ink); color:#fff; padding:2px 6px; border-radius:8px; white-space:nowrap;}
-  .rx-nm{font-family:Georgia,serif; font-weight:800; font-size:clamp(1.2rem,2.2vw,1.55rem); line-height:1;}
-  .rx-ipa{font-family:monospace; font-size:.76rem; color:#5a6472; margin-top:2px;}
-  .rx-cn{font-family:'Fraunces',serif; font-weight:700; font-size:1rem; margin-top:3px;}
-  .rx-mk{font-size:.66rem; color:var(--muted); margin-top:2px; line-height:1.3;}
+  .rx-nm{font-family:Georgia,serif; font-weight:800; font-size:clamp(1rem,1.8vw,1.25rem); line-height:1;}
+  .rx-ipa{font-family:monospace; font-size:.66rem; color:#5a6472; margin-top:1px;}
+  .rx-cn{font-family:'Fraunces',serif; font-weight:700; font-size:.86rem; margin-top:2px;}
+  .rx-mk{font-size:.58rem; color:var(--muted); margin-top:1px; line-height:1.25;}
   .rx-arrow{flex:0 0 auto; text-align:center; display:flex; flex-direction:column; align-items:center; gap:2px;}
   .rx-arrow-ic{font-size:1.3rem; font-weight:800; color:var(--orange); line-height:1;}
   .rx-arrow-lb{font-size:.56rem; letter-spacing:1px; text-transform:uppercase; color:var(--muted); font-weight:700;}
+
+  /* transition line inside merged 'Can't Read the Lyrics' */
+  .merge-rule{text-align:center; font-family:'Fraunces',serif; font-style:italic; color:var(--global2);
+    font-size:clamp(.9rem,1.7vw,1.1rem); margin:clamp(10px,1.8vh,16px) 0 clamp(6px,1vh,10px);}
+
+  /* compact remix: two pairs side by side */
+  .remix{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+  @media(max-width:720px){.remix{grid-template-columns:1fr;}}
+  .remix .rx-row{margin:0;}
 
   /* CH · turning up the volume (media eras — countryness falling) */
   .vol-grid{display:grid; grid-template-columns:repeat(6,1fr); gap:9px;}
@@ -178,6 +190,18 @@
   .did-know{margin-top:10px; background:var(--global-soft); border:1px solid #cfe2f2; border-left:4px solid var(--global); border-radius:12px;
     padding:10px 15px; font-size:clamp(.74rem,1.3vw,.86rem); color:#4a5568; line-height:1.45;}
   .did-know b{color:var(--global2);}
+  /* devil-horn Lucifer highlight — the BOX grows its own horns */
+  .did-know.devil{position:relative; margin-top:20px; background:linear-gradient(135deg,#fff1f0,#ffe1de);
+    border:1.5px solid #e0645c; border-left:4px solid #d1342b; box-shadow:0 6px 18px rgba(209,52,43,.18); overflow:visible;}
+  .did-know.devil b{color:#b71c1c;}
+  /* two curved horns rising from the top edge of the box */
+  .did-know.devil::before,
+  .did-know.devil::after{content:""; position:absolute; top:-15px; width:20px; height:20px;
+    background:#d1342b; z-index:-1;}
+  .did-know.devil::before{left:20px; border-radius:0 100% 0 60%; transform:rotate(-18deg);
+    box-shadow:0 2px 4px rgba(183,28,28,.35);}
+  .did-know.devil::after{right:20px; border-radius:100% 0 60% 0; transform:rotate(18deg);
+    box-shadow:0 2px 4px rgba(183,28,28,.35);}
 
   /* CH · Aria's requirements (former liner notes) */
   .reqs{display:flex; flex-direction:column; gap:10px;}
@@ -243,7 +267,7 @@
       <div class="aria-spacer"></div>
       <!-- col 2: channel strip -->
       <div class="channels">
-        <div class="ch-label">▮▮▮▮▮▮ 6 channels · tap to play</div>
+        <div class="ch-label">▮▮▮▮▮ 5 channels · tap to play</div>
         <button class="channel on" data-ch="0" onclick="setCh(0)">
           <span class="ico">🔍</span><span class="ct"><span class="cn">Track Lookup</span><span class="cd">search + my global hits</span></span>
           <span class="eq"><i></i><i></i><i></i><i></i></span><span class="num">01</span></button>
@@ -251,17 +275,14 @@
           <span class="ico">💿</span><span class="ct"><span class="cn">On Tour</span><span class="cd">names that travel the world</span></span>
           <span class="eq"><i></i><i></i><i></i><i></i></span><span class="num">02</span></button>
         <button class="channel" data-ch="2" onclick="setCh(2)">
-          <span class="ico">🎼</span><span class="ct"><span class="cn">Can't Read the Lyrics</span><span class="cd">when a name needs a code</span></span>
+          <span class="ico">🎼</span><span class="ct"><span class="cn">Can't Read the Lyrics</span><span class="cd">the code, and the remix that beats it</span></span>
           <span class="eq"><i></i><i></i><i></i><i></i></span><span class="num">03</span></button>
         <button class="channel" data-ch="3" onclick="setCh(3)">
           <span class="ico">🔊</span><span class="ct"><span class="cn">Turning Up the Volume</span><span class="cd">media makes a name loud</span></span>
           <span class="eq"><i></i><i></i><i></i><i></i></span><span class="num">04</span></button>
         <button class="channel" data-ch="4" onclick="setCh(4)">
-          <span class="ico">🎵</span><span class="ct"><span class="cn">Same Song, Different Key</span><span class="cd">I'll take the remix</span></span>
-          <span class="eq"><i></i><i></i><i></i><i></i></span><span class="num">05</span></button>
-        <button class="channel" data-ch="5" onclick="setCh(5)">
           <span class="ico">📝</span><span class="ct"><span class="cn">Aria's Rider</span><span class="cd">what she's hoping for</span></span>
-          <span class="eq"><i></i><i></i><i></i><i></i></span><span class="num">06</span></button>
+          <span class="eq"><i></i><i></i><i></i><i></i></span><span class="num">05</span></button>
       </div>
 
       <!-- right stage -->
@@ -302,39 +323,32 @@
 
           <!-- PANEL 2 · can't read the lyrics (music-sheet phonetics) -->
           <div class="panel" data-p="2">
-            <div class="p-aria">"If people can't read it, they never play it. Why make the baby spell their name out loud forever?"</div>
+            <div class="p-aria">"If people can't read it, they never play it. So I'd cut a remix, keep the soul of the name, in a version the whole world can actually play."</div>
             <div class="p-title">Can't Read the Lyrics</div>
-            <div class="p-sub">Two names from two different cultures. Both common at home, both a puzzle on sight.</div>
+            <div class="p-sub">Two names, two cultures. Common at home, a puzzle on sight.</div>
             <div class="two" id="declanNiamh"></div>
-            <div class="p-cap"><b>Niamh</b> (say <em class="q">NEEV</em>, countryness 60) and <b>Ximena</b> (say <em class="q">hee-MEH-nah</em>, countryness 81) both stay locked to the places that already speak the code. Every culture writes its own sheet music, and the notes sit where the sound does, tap one:</div>
+            <div class="p-cap"><b>Niamh</b> (<em class="q">NEEV</em>) and <b>Ximena</b> (<em class="q">hee-MEH-nah</em>) stay locked to the places that already speak the code. Each culture has its own sheet music, tap one:</div>
             <div class="staff-wrap">
               <div class="staff-tabs" id="staffTabs"></div>
               <div class="staff" id="staffBox"></div>
             </div>
+            <div class="merge-rule">🎵 Aria's fix? Cut a remix.</div>
+            <div class="remix" id="patrick"></div>
+            <div class="p-cap">The <b>remixes</b> (Patrick, Keeva) dropped the Gaelic spelling and went worldwide; the <b>originals</b> stayed home. <em class="q">"A remix isn't losing the song, it's letting more people hear it."</em></div>
           </div>
 
           <!-- PANEL 3 · turning up the volume (media effect) -->
           <div class="panel" data-p="3">
-            <div class="p-aria">"And every time the world got a louder shared signal, radio, TV, the internet, our names drifted closer together."</div>
+            <div class="p-aria">"Every louder signal, radio, TV, the internet, pulls our names closer together. That is the current I want carrying theirs."</div>
             <div class="p-title">Turning Up the Volume</div>
             <div class="p-sub">From silent films to TikTok, each media revolution amplified names across borders. The louder the shared signal, the more our playlists sync up.</div>
             <div class="vol-grid" id="volGrid"></div>
             <div class="vol-foot" id="volFoot"></div>
-            <div class="did-know">💡 <b>Did you know?</b> For years, <b>zero</b> babies were named <b>Lucifer</b>. Then Netflix's <em>Lucifer</em> (2016) rebranded the devil as a charming lead, and the name went from mute to a peak of <b>77</b>. One loud enough signal can move a line no one dared cross.</div>
-            <div class="p-cap">Every media revolution turned the volume up on the same shared playlist. <b>That is the current I want carrying their name, loud enough to reach every chart at once.</b></div>
+            <div class="did-know devil"><b>Did you know?</b> For years, <b>zero</b> babies were named <b>Lucifer</b>. Then Netflix's <em>Lucifer</em> (2016) rebranded the devil as a charming lead, and the name went from mute to a peak of <b>77</b>. One loud enough signal can move a line no one dared cross.</div>
           </div>
 
-          <!-- PANEL 4 · remix -->
+          <!-- PANEL 4 · Aria's rider (former wishlist) -->
           <div class="panel" data-p="4">
-            <div class="p-aria">"And honestly? I'll take the remix. Keep the soul of the name, cut a version the whole world can actually play."</div>
-            <div class="p-title">Same Song, Different Key</div>
-            <div class="p-sub">Same name, an original pressing and an international remix. Only one gets global airplay, and Aria is fine with that.</div>
-            <div class="remix" id="patrick"></div>
-            <div class="p-cap">Same meaning, same roots. The <b>remixes</b> (Patrick, Keeva) stripped the Gaelic spelling and went worldwide. The <b>originals</b> (Pádraig, Caoimhe) kept their form and stayed home. "A remix isn't losing the song," she says, "it's letting more people hear it."</div>
-          </div>
-
-          <!-- PANEL 5 · Aria's rider (former wishlist) -->
-          <div class="panel" data-p="5">
             <div class="p-aria">"So here's my rider, the short list of things I'm hoping for in the baby's name."</div>
             <div class="p-title">Aria's Wishlist</div>
             <div class="p-sub">The qualities she keeps reaching for, each one quietly carried by the data.</div>
@@ -361,7 +375,7 @@
 
 <script>
 /* ============ channel switching ============ */
-const NOW=['Requests','On Tour','Can\'t Read the Lyrics','Turning Up the Volume','Same Song, Different Key','Aria\'s Rider'];
+const NOW=['Requests','On Tour','Can\'t Read the Lyrics','Turning Up the Volume','Aria\'s Rider'];
 const N=NOW.length;
 let cur=0, flowDrawn=false, volDrawn=false;
 function setCh(i){
@@ -459,11 +473,10 @@ function flowMap(){
 
 /* ============ CH03 · Declan/Niamh + music-sheet phonetics ============ */
 function sheetCard(name,ipa,score,cat,cls,home,status){
-  return `<div class="sheet-card ${cls}"><div class="cat">${cat}</div>
-    <div class="nm">${name}</div><div class="ipa">${ipa}</div>
-    <div class="row"><span>Countryness</span><b>${score}</b></div>
-    <div class="row"><span>Home country</span><b>${home}</b></div>
-    <div class="status">${status}</div></div>`;
+  return `<div class="sheet-card ${cls}">
+    <div class="sc-main"><div class="nm">${name}</div><div class="ipa">${ipa} · ${home}</div></div>
+    <div class="cn-chip"><div class="cv">${score}</div><div class="cl">countryness</div></div>
+  </div>`;
 }
 document.getElementById('declanNiamh').innerHTML =
   sheetCard('Niamh','/NEEV/ · Irish','60.4','CAT# IRL-1997-042','lose','Ireland','NEEDS THE CODE 🏠') +
