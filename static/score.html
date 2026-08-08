@@ -59,7 +59,7 @@
   .comp.g{background:linear-gradient(160deg,#eaf4fc,#d6e9f7); border:1px solid #bcdcf1;}
   .comp.l{background:linear-gradient(160deg,#f3ecfa,#e7d8f5); border:1px solid #d8c2ee;}
   .comp .face{flex:0 0 auto; width:clamp(90px,15vh,140px); height:clamp(90px,15vh,140px); border-radius:50%; overflow:hidden; box-shadow:0 6px 18px rgba(0,0,0,.16); display:block; background:#fff;}
-  .comp .face img{width:100%; height:100%; object-fit:cover; display:block;}
+  .comp .face img{width:106%; height:106%; object-fit:cover; object-position:center; display:block; margin:-3%;}
   .comp .role{flex:0 0 auto; font-family:'Fraunces',serif; font-style:italic; font-size:clamp(.6rem,1.15vw,.72rem); letter-spacing:1px; margin-top:8px; font-weight:600; text-transform:uppercase;}
   .comp.g .role{color:var(--global2);} .comp.l .role{color:var(--local2);}
   .comp .nm{flex:0 0 auto; font-family:'Caveat',cursive; font-size:clamp(1.6rem,3.4vw,2.3rem); line-height:1; margin:2px 0 0;}
@@ -102,12 +102,12 @@
   .gauge-readout b{font-family:'Caveat',cursive; font-size:1.25em; font-weight:700;}
   .gauge-readout .hint{display:block; font-weight:500; font-style:italic; color:var(--muted); font-size:.82em;}
 
-  /* the reading scale — now interactive */
+  /* the reading scale — interactive, no layout shift on hover */
   .scale{flex:0 0 auto; display:grid; grid-template-columns:repeat(5,1fr); gap:clamp(4px,.7vw,8px); margin-top:clamp(8px,1.4vh,14px);}
-  .sc{border-radius:10px; padding:clamp(6px,1.1vh,10px) 4px; text-align:center; border:1px solid var(--line); background:#fff;
-    cursor:pointer; transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease; position:relative;}
-  .sc:hover, .sc.active{transform:translateY(-4px); box-shadow:0 10px 20px rgba(120,150,190,.22);}
-  .sc.active{border-width:2px;}
+  .sc{border-radius:10px; padding:clamp(6px,1.1vh,10px) 4px; text-align:center; border:2px solid var(--line); background:#fff;
+    cursor:pointer; transition:box-shadow .18s ease, border-color .18s ease, background .18s ease; position:relative;}
+  .sc:hover, .sc.active{box-shadow:0 8px 18px rgba(120,150,190,.22); background:#fbfdff;}
+  .sc.active{border-color:#b7c6da;}
   .sc .em{font-size:clamp(1rem,1.9vw,1.25rem); line-height:1;}
   .sc .lb{font-size:clamp(.58rem,1.05vw,.68rem); font-weight:800; margin-top:3px;}
   .sc .rg{font-size:clamp(.56rem,1vw,.66rem); color:var(--muted); font-family:'Courier New',monospace; margin-top:1px;}
@@ -300,7 +300,6 @@
       card.addEventListener('click',      function(){ activate(card); });   // tap on touch
       card.addEventListener('mouseleave', clearAll);
     });
-    // leaving the whole scale row resets the dial
     document.getElementById('scale').addEventListener('mouseleave', clearAll);
   })();
 </script>
