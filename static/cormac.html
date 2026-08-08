@@ -202,44 +202,36 @@
     animation:alexaPulse 2s ease-in-out infinite;}
   @keyframes alexaPulse{0%,100%{box-shadow:0 0 0 3px rgba(0,202,255,.25);}50%{box-shadow:0 0 0 6px rgba(0,202,255,.10);}}
 
-  /* CH · One of a Kind — a museum display of rare masters (no vinyl; spotlit plinths) */
-  .ook-hero{margin-bottom:10px;}
-  .ook-hero-card{position:relative; display:flex; align-items:center; gap:clamp(12px,2vw,20px);
-    background:radial-gradient(120% 140% at 20% 0%, #3a2b52 0%, #201730 70%); border-radius:16px;
-    padding:clamp(12px,2vh,18px) clamp(16px,2.2vw,24px); color:#fff; box-shadow:0 12px 30px rgba(90,60,140,.3); overflow:hidden;}
-  /* museum spotlight cone behind the hero */
-  .ook-hero-card::before{content:""; position:absolute; top:-40px; left:8%; width:120px; height:180px;
-    background:linear-gradient(180deg, rgba(255,235,170,.30), rgba(255,235,170,0)); transform:rotate(14deg); pointer-events:none;}
-  .ook-badge{position:absolute; top:-11px; left:50%; transform:translateX(-50%); white-space:nowrap;
-    background:var(--gold); color:#4a3300; font-weight:800; font-size:.55rem; letter-spacing:1px; padding:4px 12px; border-radius:999px;
-    box-shadow:0 4px 12px rgba(240,178,62,.4); z-index:2;}
-  /* the hero 'exhibit': a framed gold plaque, not a disc */
-  .ook-plaque{position:relative; z-index:1; flex:0 0 auto; width:clamp(84px,12vw,120px); padding:clamp(10px,1.6vh,16px) 10px;
-    background:linear-gradient(150deg,#f7d774,#e0a92e); border:3px solid #fff2cf; border-radius:10px; text-align:center;
-    box-shadow:0 8px 20px rgba(0,0,0,.4);}
-  .ook-plaque .star{font-size:1.5rem; line-height:1;}
-  .ook-plaque .lbl{font-size:.5rem; font-weight:800; letter-spacing:.6px; color:#5a3d00; margin-top:3px; text-transform:uppercase;}
-  .ook-hero-info{flex:1; min-width:0; text-align:left; z-index:1;}
-  .ook-hero-nm{font-family:Georgia,serif; font-weight:800; font-size:clamp(1.6rem,3.6vw,2.4rem); line-height:1;}
-  .ook-hero-country{color:#c9b6e6; font-size:.76rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-top:2px;}
-  .ook-hero-mean{color:#d9cdec; font-style:italic; font-size:.78rem; margin-top:5px;}
-  .ook-hero-cn{margin-top:7px; font-size:.8rem; color:#efe8f7;}
-  .ook-hero-cn b{font-family:'Fraunces',serif; color:var(--gold); font-size:1.1rem;}
-  /* supporting rare names: spotlit plinths in a glass case row */
-  .ook-case{display:grid; grid-template-columns:repeat(6,1fr); gap:8px; background:linear-gradient(180deg,#2a2036,#1c1528);
-    border:1px solid #3a2f4a; border-radius:14px; padding:12px 10px 10px;}
-  @media(max-width:640px){.ook-case{grid-template-columns:repeat(3,1fr);}}
-  .ook-ex{position:relative; text-align:center; padding-top:6px;}
-  /* spotlight beam over each plinth */
-  .ook-ex::before{content:""; position:absolute; top:-6px; left:50%; transform:translateX(-50%);
-    width:0; height:0; border-left:16px solid transparent; border-right:16px solid transparent;
-    border-bottom:34px solid rgba(255,236,170,.14);}
-  .ook-ex .disc{display:none;}
-  .ook-plinth{position:relative; z-index:1; background:linear-gradient(150deg,#f7d774,#dca02a); border-radius:7px;
-    padding:8px 5px 9px; box-shadow:0 5px 12px rgba(0,0,0,.4);}
-  .ook-nm{font-family:Georgia,serif; font-weight:800; font-size:.82rem; color:#3a2600; line-height:1;}
-  .ook-country{font-size:.52rem; color:#6a4b12; text-transform:uppercase; letter-spacing:.4px; margin-top:2px; font-weight:800;}
-  .ook-cn{font-size:.56rem; color:#5a3d00; font-weight:800; margin-top:2px;}
+  /* Local Collection — rarest highlight line */
+  .lc-rarest{margin-top:9px; background:background:#f6effb; border:1px solid #e0d0f0;
+    border-radius:11px; padding:9px 14px; font-size:clamp(.72rem,1.25vw,.82rem); color:#4a5568; line-height:1.4; text-align:center;}
+  .lc-rarest b{color:var(--local2);}
+
+  /* CH · The Underground Is Growing — NI (rising) vs Ireland (slipping) */
+  .ug-compare{display:grid; grid-template-columns:1fr 1fr; gap:clamp(10px,1.6vw,18px); margin-bottom:12px;}
+  @media(max-width:620px){.ug-compare{grid-template-columns:1fr;}}
+  .ug-side{border-radius:14px; padding:clamp(12px,1.8vh,18px) clamp(12px,1.6vw,18px); text-align:center;}
+  .ug-side.rising{background:linear-gradient(160deg,#f3ecfa,#e9ddf6); border:1px solid #d8c2ee;}
+  .ug-side.slipping{background:linear-gradient(160deg,#fbe9ee,#f7dbe3); border:1px solid #f0c0cf;}
+  .ug-tag{font-size:.62rem; letter-spacing:2px; font-weight:800; text-transform:uppercase;}
+  .ug-side.rising .ug-tag{color:var(--local2);} .ug-side.slipping .ug-tag{color:var(--coral);}
+  .ug-who{font-family:'Fraunces',serif; font-weight:600; font-size:clamp(1.05rem,2vw,1.3rem); margin:2px 0 3px; color:var(--ink);}
+  .ug-pct{font-family:'Fraunces',serif; font-weight:700; font-size:clamp(2rem,4.4vw,2.8rem); line-height:1;}
+  .ug-side.rising .ug-pct{color:var(--local2);} .ug-side.slipping .ug-pct{color:var(--coral);}
+  .ug-bars{display:flex; align-items:flex-end; justify-content:center; gap:clamp(2px,.5vw,4px); height:clamp(50px,8vh,72px); margin:10px 0 8px;}
+  .ug-b{flex:1; max-width:16px; border-radius:3px 3px 0 0;}
+  .ug-note{font-size:clamp(.68rem,1.2vw,.78rem); color:#5a6472; line-height:1.35;}
+  .ug-note b{color:var(--ink);}
+  /* the underground crate: rooted names as little discs */
+  .ug-crate-lab{text-align:center; font-size:.66rem; letter-spacing:1px; text-transform:uppercase; color:var(--muted); font-weight:700; margin:2px 0 9px;}
+  .ug-crate{display:grid; grid-template-columns:repeat(8,1fr); gap:8px; margin-bottom:4px;}
+  @media(max-width:640px){.ug-crate{grid-template-columns:repeat(4,1fr);}}
+  .ug-disc-item{text-align:center;}
+  .ug-disc{width:clamp(30px,3.6vw,42px); height:auto; margin:0 auto 4px;}
+  .ug-disc svg{width:100%; display:block;}
+  .ug-disc-item:hover .ug-disc svg{animation:spin 1.6s linear infinite;}
+  .ug-dn{font-family:Georgia,serif; font-weight:800; font-size:.8rem; color:var(--ink); line-height:1;}
+  .ug-dy{font-size:.56rem; color:var(--muted); margin-top:2px;}
 
   /* CH · fame fades (Arya vs Khaleesi) */
   /* CH · fame fades — one-hit-wonder timeline */
@@ -334,31 +326,47 @@
           </div>
 
           <!-- PANEL 1 · cultural passwords -->
-          <div class="panel" data-p="1">
+          <div class="panel" data-p="2">
             <div class="p-cormac">"Local doesn't mean short on choice. Every region has a crate full of names, and each one actually means something. Pick a region, flip through the records."</div>
             <div class="p-title">The Local Collection</div>
             <div class="p-sub">Tap a region to flip through its crate. Every record carries a meaning and rarely leaves home.</div>
             <div class="lc-tabs" id="lcTabs"></div>
             <div class="lc-crate" id="lcCrate"></div>
-            <div class="did-know alexa"><span class="alexa-ring"></span><b>"Alexa, why did my name disappear?"</b> After Amazon's Echo launched in 2014, the name <b>Alexa</b> fell <b>92%</b> (and <b>Siri</b> dropped <b>93%</b> once Apple claimed it). A global name can be overwritten by a gadget overnight, a rooted local name belongs to no corporation.</div>
+            <div class="did-know alexa"><span class="alexa-ring"></span><b>"Alexa, why did my name disappear?"</b> After Amazon's Echo launched in 2014, the name <b>Alexa</b> fell <b>92%</b> (and <b>Siri</b> dropped <b>93%</b> once Apple claimed it).</div>
             <div class="p-cap">Freedom, radiance, a star, the great tree. Say one of these and a stranger knows your street. <b>Local isn't a compromise, it's a deeper catalogue.</b></div>
           </div>
 
-          <!-- PANEL 2 · One of a Kind (rarest single-country pressings) -->
-          <div class="panel" data-p="2">
-            <div class="p-cormac">"And a few of these? They exist in one country and nowhere else on Earth. Not a hit, not a re-press, a single, hand-cut record."</div>
-            <div class="p-title">One of a Kind</div>
-            <div class="p-sub">The rarest pressings in the whole catalogue, names almost no one outside home has ever recorded.</div>
-            <div class="ook-hero" id="ookHero"></div>
-            <div class="ook-grid" id="ookGrid"></div>
-            <div class="p-cap">A countryness in the <b>thousands</b> means the name is effectively a one-country original. <b>You cannot buy this record anywhere else.</b></div>
+          <!-- PANEL 2 · The Underground Is Growing (NI rising vs IE slipping) -->
+          <div class="panel" data-p="3">
+            <div class="p-cormac">"Everyone says local names are slipping, and that is exactly the drift I mean to fight."</div>
+            <div class="p-title">The Underground Is Growing</div>
+            <div class="p-sub">Two neighbours, opposite directions. How much of each year's naming stays distinctly local, 2010 to 2023.</div>
+            <div class="ug-compare">
+              <div class="ug-side rising">
+                <div class="ug-tag">RISING</div>
+                <div class="ug-who">Northern Ireland</div>
+                <div class="ug-pct">+38%</div>
+                <div class="ug-bars" id="ugBarsNI"></div>
+                <div class="ug-note">More parents reaching for <b>rooted, local names</b> every year. Distinctiveness is not fading here, it is being chosen.</div>
+              </div>
+              <div class="ug-side slipping">
+                <div class="ug-tag">SLIPPING</div>
+                <div class="ug-who">Ireland</div>
+                <div class="ug-pct">&minus;52%</div>
+                <div class="ug-bars" id="ugBarsIE"></div>
+                <div class="ug-note">The same global hits crowding in, year on year. This is the drift <b>I do not want for our child.</b></div>
+              </div>
+            </div>
+            <div class="ug-crate-lab">&#9670; The underground crate &middot; rooted names climbing the charts since 2010</div>
+            <div class="ug-crate" id="ugCrate"></div>
+            <div class="p-cap">One neighbour proves local can rise. <b>I want us on that side of the line,</b> a name that keeps its roots even as the charts pull the other way.</div>
           </div>
 
           <!-- PANEL 3 · fame fades, roots don't -->
-          <div class="panel" data-p="3">
+          <div class="panel" data-p="1">
             <div class="p-cormac">"Global fame is disposable. The loudest debuts fade the fastest, unless there are real roots underneath."</div>
             <div class="p-title">Fame Fades, Roots Don't</div>
-            <div class="p-sub">One-hit wonders on a timeline. Tap a name to see how far it fell from its peak.</div>
+            <div class="p-sub">One-hit wonders on a timeline. Hover a name to see how far it fell from its peak.</div>
             <div class="ohw-line"><div class="ohw-track"></div><div class="ohw-markers" id="ohwMarkers"></div></div>
             <div class="ohw-info" id="ohwInfo"></div>
             <div class="p-cap">The loudest debut, <b>Britney</b>, all but vanished (down 93%). The one that lasted, <b>Arya</b>, had real Sanskrit roots under the fame. <b>A borrowed hit is a rental, roots are what you own.</b></div>
@@ -366,13 +374,12 @@
 
           <!-- PANEL 4 · Cormac's wishlist -->
           <div class="panel" data-p="4">
-            <div class="p-cormac">"So here is my brief for the baby's name, the things that make a name mean something."</div>
+            <div class="p-cormac">"So here is my brief for the baby's name, the things that make it mean something."</div>
             <div class="p-title">Cormac's Wishlist</div>
-            <div class="p-sub">The qualities he's looking for, each carried by the data.</div>
             <div class="reqs">
-              <div class="req"><div class="ri">📖</div><div><span class="rh">Carry a meaning</span><span class="rbig">a word, not a sound</span><div class="rd">Saoirse means "freedom." A name that says something roots the baby to a story, not just a chart position.</div></div></div>
-              <div class="req" style="border-left-color:var(--sage)"><div class="ri">🌳</div><div><span class="rh">Hold our roots</span><span class="rbig" style="color:var(--sage)">Gaelic, from home</span><div class="rd">A name from here tells the baby where they come from every time it is spoken. Heritage travels forward, not sideways.</div></div></div>
-              <div class="req" style="border-left-color:var(--orange)"><div class="ri">💎</div><div><span class="rh">Stay uniquely theirs</span><span class="rbig" style="color:var(--orange)">rare, not global</span><div class="rd">Northern Ireland proves distinctiveness is rising. A name that is theirs alone is worth more than one shared by everyone.</div></div></div>
+              <div class="req"><div class="ri">📖</div><div><span class="rh">Carries a meaning</span><span class="rbig">a word, not just a sound</span></div></div>
+              <div class="req" style="border-left-color:var(--sage)"><div class="ri">🌳</div><div><span class="rh">Holds our roots</span><span class="rbig" style="color:var(--sage)">Gaelic, from home</span></div></div>
+              <div class="req" style="border-left-color:var(--orange)"><div class="ri">💎</div><div><span class="rh">Stays uniquely theirs</span><span class="rbig" style="color:var(--orange)">rare, not global</span></div></div>
             </div>
             <div class="p-cap">Meaning, roots, and something all their own. <b>Those are the traits that make a name a treasure, and the brief he wants for the baby.</b></div>
           </div>
@@ -387,13 +394,13 @@
           <span class="ico">🎤</span><span class="ct"><span class="cn">Can You Say This?</span><span class="cd">easy for those who belong</span></span>
           <span class="eq"><i></i><i></i><i></i><i></i></span><span class="num">01</span></button>
         <button class="channel" data-ch="1" onclick="setCh(1)">
-          <span class="ico">🎶</span><span class="ct"><span class="cn">The Local Collection</span><span class="cd">a crate of names, each a meaning</span></span>
+          <span class="ico">🌳</span><span class="ct"><span class="cn">Fame Fades, Roots Don't</span><span class="cd">the one-hit rebuttal</span></span>
           <span class="eq"><i></i><i></i><i></i><i></i></span><span class="num">02</span></button>
         <button class="channel" data-ch="2" onclick="setCh(2)">
-          <span class="ico">💎</span><span class="ct"><span class="cn">One of a Kind</span><span class="cd">the rarest pressings of all</span></span>
+          <span class="ico">🎶</span><span class="ct"><span class="cn">The Local Collection</span><span class="cd">a crate of names, each a meaning</span></span>
           <span class="eq"><i></i><i></i><i></i><i></i></span><span class="num">03</span></button>
         <button class="channel" data-ch="3" onclick="setCh(3)">
-          <span class="ico">🌳</span><span class="ct"><span class="cn">Fame Fades, Roots Don't</span><span class="cd">the one-hit rebuttal</span></span>
+          <span class="ico">📈</span><span class="ct"><span class="cn">The Underground Is Growing</span><span class="cd">local isn't dying, it's rising</span></span>
           <span class="eq"><i></i><i></i><i></i><i></i></span><span class="num">04</span></button>
         <button class="channel" data-ch="4" onclick="setCh(4)">
           <span class="ico">📝</span><span class="ct"><span class="cn">Cormac's Wishlist</span><span class="cd">what he wants in a name</span></span>
@@ -414,7 +421,7 @@
 
 <script>
 /* ============ channel switching ============ */
-const NOW=['Can You Say This?','The Local Collection','One of a Kind','Fame Fades, Roots Don\'t','Cormac\'s Wishlist'];
+const NOW=['Can You Say This?','Fame Fades, Roots Don\'t','The Local Collection','The Underground Is Growing','Cormac\'s Wishlist'];
 const N=NOW.length;
 let cur=0;
 function setCh(i){
@@ -499,36 +506,28 @@ function lcShow(k){
 }
 lcShow('Ireland');
 
-/* ============ CH03 · One of a Kind (rarest single-country pressings) ============ */
-const OOK_HERO={name:'Raewyn', country:'New Zealand', cn:'168,730', mean:'a mid-century coined name, born and kept in New Zealand'};
-const OOK=[
-  {name:'Brid', country:'Ireland', cn:'35,001', mean:'from Bríd (Brigid) · goddess, saint'},
-  {name:'Nikau', country:'New Zealand', cn:'29,620', mean:'the native palm tree'},
-  {name:'Delwyn', country:'New Zealand', cn:'24,515', mean:'neat and blessed (Welsh-Māori)'},
-  {name:'Triona', country:'Ireland', cn:'13,983', mean:'short for Caitríona'},
-  {name:'Frédérique', country:'Québec', cn:'10,588', mean:'peaceful ruler'},
-  {name:'Kauri', country:'New Zealand', cn:'10,106', mean:'the great forest tree'}
+/* ============ CH03 · The Underground Is Growing (NI rising vs Ireland slipping) ============ */
+const NI=[70,72,72,80,67,68,83,82,83,91,85,94,75,78];   // 2010-2023, cn>=50 count
+const IE=[113,119,119,103,108,96,99,91,64,63,65,72,55,59];
+function ugMiniBars(vals, rising){
+  const mx=Math.max(...vals), mn=Math.min(...vals);
+  return vals.map((v,i)=>{
+    const h=Math.round((v-mn)/(mx-mn)*100*.8)+18;
+    // rising: darken toward the end; slipping: fade toward the end
+    const t=i/(vals.length-1);
+    const col = rising ? `rgba(111,74,156,${0.45+0.55*t})` : `rgba(232,120,140,${0.85-0.5*t})`;
+    return `<span class="ug-b" style="height:${h}%;background:${col}"></span>`;
+  }).join('');
+}
+document.getElementById('ugBarsNI').innerHTML = ugMiniBars(NI, true);
+document.getElementById('ugBarsIE').innerHTML = ugMiniBars(IE, false);
+const UG_CRATE=[
+  ['Fiadh','2014'],['Saoirse','2010'],['Ríoghnach','2016'],['Oisín','2011'],
+  ['Bláthnaid','2015'],['Tadhg','2012'],['Éabha','2013'],['Cillian','2011']
 ];
-document.getElementById('ookHero').innerHTML =
-  `<div class="ook-hero-card">
-     <div class="ook-badge">💎 RAREST NAME IN THE CATALOGUE</div>
-     <div class="ook-plaque"><div class="star">🏆</div><div class="lbl">One of<br>One</div></div>
-     <div class="ook-hero-info">
-       <div class="ook-hero-nm">${OOK_HERO.name}</div>
-       <div class="ook-hero-country">${OOK_HERO.country} only</div>
-       <div class="ook-hero-mean">${OOK_HERO.mean}</div>
-       <div class="ook-hero-cn"><b>${OOK_HERO.cn}×</b> more concentrated at home than anywhere else</div>
-     </div>
-   </div>`;
-document.getElementById('ookGrid').innerHTML =
-  `<div class="ook-case">` + OOK.map(o=>
-  `<div class="ook-ex">
-     <div class="ook-plinth">
-       <div class="ook-nm">${o.name}</div>
-       <div class="ook-country">${o.country}</div>
-       <div class="ook-cn">cn ${o.cn}</div>
-     </div>
-   </div>`).join('') + `</div>`;
+function ugDisc(){return `<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="#e7d8f5"/><circle cx="50" cy="50" r="30" fill="none" stroke="#c9b0e6" stroke-width="1.4"/><circle cx="50" cy="50" r="14" fill="#b79ad4"/><circle cx="50" cy="50" r="4" fill="#f6effb"/></svg>`;}
+document.getElementById('ugCrate').innerHTML = UG_CRATE.map(([n,y])=>
+  `<div class="ug-disc-item"><div class="ug-disc">${ugDisc()}</div><div class="ug-dn">${n}</div><div class="ug-dy">since ${y}</div></div>`).join('');
 
 /* ============ CH05 · fame fades (Arya vs Khaleesi) ============ */
 function fameCard(lab,name,root,seq,color,peak,now,drop,stat){
@@ -551,7 +550,7 @@ const OHW=[
 ];
 function buildOHW(){
   const box=document.getElementById('ohwMarkers'); if(!box||box._done) return; box._done=true;
-  box.innerHTML=OHW.map((d,i)=>`<div class="ohw-m" id="ohwm${i}" onclick="ohwShow(${i})">
+  box.innerHTML=OHW.map((d,i)=>`<div class="ohw-m" id="ohwm${i}" onmouseenter="ohwShow(${i})" onclick="ohwShow(${i})">
     <div class="ohw-dot">${d.e}</div><div class="ohw-yr">${d.yr}</div><div class="ohw-nm">${d.nm}</div></div>`).join('');
   ohwShow(3); // default to Arya, the survivor
 }
