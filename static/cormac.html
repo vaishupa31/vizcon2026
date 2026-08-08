@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Side B · Cormac's Mixing Desk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Quicksand:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,500;1,9..144,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#3a4657; --muted:#7a8794; --line:#e8ddcb;
+    --panel:#fdf8ee; --cream:#fbf3d9;
+    --global:#3f8fca; --global2:#2e79ab; --global-soft:#e4f0fa;
+    --local:#8a5bb0; --local2:#6f4a9c; --local-soft:#f1e9fa;
+    --orange:#f0a020; --coral:#e8788c; --gold:#f0b23e; --sage:#3fa787;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Quicksand',sans-serif; color:var(--ink); line-height:1.55;
+    background:
+      radial-gradient(1100px 700px at 12% -5%, #f1e9fa 0%, transparent 55%),
+      radial-gradient(900px 600px at 97% 8%, #fbf3d9 0%, transparent 50%),
+      linear-gradient(180deg, #f2ecfa 0%, #f8f1e3 100%);
+    background-attachment:fixed;}
+  .wrap{width:100%; max-width:1500px; margin:0 auto; padding:0 clamp(16px,3vw,40px);}
+  em.q{font-style:italic;}
+
+  /* Cormac lives in the page background, bottom-right, translucent */
+  .cormac-bg{position:fixed; right:max(clamp(4px,2vw,40px), calc(50vw - 750px)); bottom:0; height:min(80vh,780px); width:auto; z-index:0;
+    pointer-events:none; opacity:.95; filter:drop-shadow(0 10px 20px rgba(150,120,190,.22));}
+  @media(max-width:1180px){.cormac-bg{opacity:.85; height:min(72vh,700px); right:-20px;}}
+  @media(max-width:900px){.cormac-bg{opacity:.12;}}
+
+  /* floating background notes + now-playing badge (shared) */
+  @keyframes fbob{0%,100%{transform:translateY(0) rotate(-6deg);}50%{transform:translateY(-16px) rotate(6deg);}}
+  .notes{position:fixed; inset:0; overflow:hidden; pointer-events:none; z-index:0;}
+  .notes span{position:absolute; opacity:.34; animation:fbob 6s infinite ease-in-out;}
+  .now-badge{position:fixed; top:clamp(10px,1.6vh,16px); left:clamp(12px,2vw,20px); z-index:30; display:flex; align-items:center; gap:9px;
+    background:rgba(253,248,238,.92); border:1px solid var(--line); border-radius:999px; padding:6px 15px 6px 12px; cursor:pointer;
+    box-shadow:0 5px 16px rgba(150,120,190,.16); backdrop-filter:blur(4px); user-select:none;}
+  .now-badge .eqbars{display:flex; gap:2px; align-items:flex-end; height:14px; flex:0 0 auto;}
+  .now-badge .eqbars i{width:3px; background:var(--local); border-radius:1px; animation:nbeq .9s ease-in-out infinite;}
+  .now-badge .eqbars i:nth-child(2){animation-delay:.2s; background:var(--global);}
+  .now-badge .eqbars i:nth-child(3){animation-delay:.4s; background:var(--orange);}
+  .now-badge .eqbars i:nth-child(4){animation-delay:.15s; background:var(--coral);}
+  .now-badge.paused .eqbars i{animation-play-state:paused;}
+  .now-badge .nb-txt{font-size:.72rem; font-weight:700; color:var(--ink); line-height:1;}
+  .now-badge .nb-txt small{display:block; font-weight:600; color:var(--muted); font-size:.6rem; letter-spacing:1px; text-transform:uppercase; margin-bottom:2px;}
+  @keyframes nbeq{0%,100%{height:3px;}50%{height:14px;}}
+  @media(max-width:620px){.now-badge{display:none;}}
+
+  .desk{position:relative; z-index:1; height:100vh; max-height:100vh; display:flex; flex-direction:column; padding:clamp(10px,2vh,18px) 0 clamp(8px,1.6vh,14px); overflow:hidden;}
+  .desk-head{text-align:center; flex:0 0 auto;}
+  .chapter-tag{font-family:'Fraunces',serif; font-style:italic; color:var(--local2); font-size:clamp(.82rem,1.5vw,1rem);}
+  h1.title{font-family:'Caveat',cursive; font-size:clamp(2rem,4.6vw,3.1rem); line-height:1; margin:1px 0 4px; color:var(--local2);}
+  .thesis{color:#4a5568; font-size:clamp(.85rem,1.6vw,1.02rem); max-width:720px; margin:0 auto;}
+  .thesis b{color:var(--local2);}
+
+  /* console: [stage · channel strip · Cormac spacer] — mirror of Aria (figure on right) */
+  .console{flex:1; min-height:0; display:grid;
+    grid-template-columns:1fr minmax(220px,290px) clamp(150px,17vw,340px); gap:clamp(16px,2.2vw,32px);
+    margin-top:clamp(14px,2.6vh,26px); align-items:stretch;}
+  .cormac-spacer{}  /* empty; Cormac's fixed image sits over this column */
+  @media(max-width:1180px){.console{grid-template-columns:1fr minmax(200px,250px) clamp(90px,10vw,150px); gap:18px;}}
+  @media(max-width:760px){.console{grid-template-columns:1fr;} .cormac-spacer{display:none;}}
+
+  .channels{display:flex; flex-direction:column; gap:clamp(7px,1.1vh,10px); min-height:0; justify-content:center;}
+  .ch-label{font-size:.58rem; letter-spacing:2px; text-transform:uppercase; color:var(--muted); font-weight:700; text-align:center;}
+  .channel{display:flex; align-items:center; gap:9px; background:rgba(253,248,238,.92); border:1px solid var(--line);
+    border-radius:12px; padding:clamp(8px,1.3vh,12px) clamp(9px,1.3vw,13px); cursor:pointer; text-align:left;
+    transition:.22s; font:inherit; color:var(--ink); box-shadow:0 3px 10px rgba(150,120,190,.06); backdrop-filter:blur(2px);}
+  .channel:hover{transform:translateX(-3px); border-color:#d8c2ee;}
+  .channel.on{background:var(--local-soft); border-color:var(--local); box-shadow:0 6px 16px rgba(138,91,176,.18);}
+  .channel .ico{font-size:1.3rem; flex:0 0 auto;}
+  .channel .ct{flex:1; min-width:0;}
+  .channel .cn{display:block; font-weight:700; font-size:clamp(.82rem,1.4vw,.94rem); line-height:1.15;}
+  .channel .cd{display:block; margin-top:2px; font-size:clamp(.6rem,1.1vw,.72rem); color:var(--muted); line-height:1.2;}
+  .channel .num{font-family:'Fraunces',serif; font-style:italic; color:var(--muted); font-size:.78rem; flex:0 0 auto;}
+  .channel.on .num{color:var(--local2);}
+  .channel .eq{display:none; gap:2px; align-items:flex-end; height:15px; flex:0 0 auto;}
+  .channel.on .eq{display:flex;}
+  .channel .eq i{width:3px; background:var(--local); border-radius:1px; animation:eq .9s ease-in-out infinite;}
+  .channel .eq i:nth-child(2){animation-delay:.2s;} .channel .eq i:nth-child(3){animation-delay:.4s;} .channel .eq i:nth-child(4){animation-delay:.1s;}
+  @keyframes eq{0%,100%{height:4px;}50%{height:15px;}}
+
+  /* left stage */
+  .stage{position:relative; background:var(--panel); border:1px solid #e0d0f0; border-radius:18px;
+    box-shadow:0 12px 34px rgba(150,120,190,.16); overflow:hidden; display:flex; flex-direction:column; min-height:0;}
+  .stage-top{flex:0 0 auto; display:flex; align-items:center; justify-content:space-between; gap:10px;
+    padding:clamp(9px,1.4vh,13px) clamp(14px,2vw,22px) clamp(6px,1vh,9px); border-bottom:1px solid var(--line);}
+  .stage-now{font-size:.6rem; letter-spacing:2px; text-transform:uppercase; color:var(--local2); font-weight:800;}
+  .stage-now b{color:var(--muted); font-weight:700;}
+  .stage-flip{display:flex; gap:8px;}
+  .stage-flip button{border:1px solid var(--line); background:#fff; border-radius:8px; width:30px; height:30px; cursor:pointer; font-size:.9rem; color:var(--ink); transition:.2s;}
+  .stage-flip button:hover{border-color:var(--local); color:var(--local2);}
+  .stage-body{flex:1; min-height:0; position:relative;}
+  .panel{position:absolute; inset:0; padding:clamp(12px,2vh,18px) clamp(14px,2.4vw,26px); overflow:auto;
+    opacity:0; transform:translateY(10px); pointer-events:none; transition:opacity .35s ease, transform .35s ease;}
+  .panel.on{opacity:1; transform:none; pointer-events:auto;}
+  .p-cormac{font-family:'Fraunces',serif; font-style:italic; color:var(--local2); text-align:center; font-size:clamp(.86rem,1.6vw,1.02rem); max-width:620px; margin:0 auto 4px;}
+  .p-title{font-family:'Fraunces',serif; font-weight:600; font-size:clamp(1.1rem,2.3vw,1.45rem); text-align:center; color:var(--ink); margin-bottom:2px;}
+  .p-sub{text-align:center; color:#5a6472; font-size:clamp(.76rem,1.35vw,.88rem); max-width:560px; margin:0 auto clamp(10px,1.6vh,15px);}
+  .p-cap{font-size:clamp(.75rem,1.3vw,.86rem); color:#5a6472; text-align:center; margin-top:12px; line-height:1.5;}
+  .p-cap b{color:var(--ink);}
+
+  /* CH · can you say this? (pronunciation quiz) */
+  .say-stage{display:grid; grid-template-columns:1fr auto; gap:clamp(12px,2vw,22px); align-items:center; max-width:640px; margin:0 auto;}
+  @media(max-width:560px){.say-stage{grid-template-columns:1fr;}}
+  .say-card{background:linear-gradient(160deg,#2d2338,#161226); border-radius:16px; padding:clamp(16px,2.6vh,26px) 20px; text-align:center; color:#fff; box-shadow:0 10px 26px rgba(120,90,160,.22);}
+  .say-flag{font-size:.62rem; letter-spacing:2px; text-transform:uppercase; color:#c9b6e6; font-weight:700;}
+  .say-name{font-family:Georgia,serif; font-weight:800; font-size:clamp(2rem,5vw,3rem); line-height:1.05; margin:8px 0 6px;}
+  .say-prompt{font-size:.82rem; color:#b0a0c8; font-style:italic;}
+  .say-controls{display:flex; flex-direction:column; gap:9px;}
+  @media(max-width:560px){.say-controls{flex-direction:row; justify-content:center; flex-wrap:wrap;}}
+  .say-btn{border:2px solid var(--line); background:#fff; border-radius:12px; padding:10px 16px; cursor:pointer; font:inherit; font-weight:700; font-size:.82rem; color:var(--ink); transition:.2s; white-space:nowrap;}
+  .say-btn:hover{transform:translateY(-2px); border-color:var(--local);}
+  .say-btn.reveal{background:var(--local-soft); border-color:var(--local); color:var(--local2);}
+  .say-box{max-width:640px; margin:12px auto 0; background:#fff; border:1px solid var(--line); border-radius:12px; padding:12px 16px; font-size:.86rem; color:#4a5568; line-height:1.45; display:none;}
+  .say-box.on{display:block;}
+  .say-box.reveal{background:var(--local-soft); border-color:#d8c2ee;}
+  .say-answer{font-family:'Courier New',monospace; font-weight:800; font-size:1.15rem; color:var(--local2);}
+  .say-why{margin-top:5px; font-size:.82rem;}
+  .say-dots{text-align:center; letter-spacing:5px; color:var(--local); margin-top:12px; font-size:.9rem;}
+
+  /* CH · underground (NI vs IE + invented crate) */
+  .labels{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+  @media(max-width:520px){.labels{grid-template-columns:1fr;}}
+  .lab-card{border-radius:12px; padding:14px 16px; text-align:center;}
+  .lab-card.up{background:#f1e9fa; border:1px solid #d8c2ee;}
+  .lab-card.down{background:#fbe9ee; border:1px solid #f0c0cf;}
+  .lab-card .tag{font-size:.58rem; letter-spacing:1.5px; font-weight:800; text-transform:uppercase;}
+  .lab-card.up .tag{color:var(--local2);} .lab-card.down .tag{color:var(--coral);}
+  .lab-card .who{font-family:'Fraunces',serif; font-weight:600; font-size:1.05rem; margin:2px 0;}
+  .lab-card .trend{font-size:1.8rem; font-weight:900;}
+  .lab-card.up .trend{color:var(--local2);} .lab-card.down .trend{color:var(--coral);}
+  .lab-card .roster{display:flex; align-items:flex-end; justify-content:center; gap:5px; height:52px; margin:8px 0 6px;}
+  .lab-card .rec{width:12px; border-radius:3px 3px 0 0;}
+  .lab-card .desc{font-size:.72rem; color:#5a6472; line-height:1.35;}
+  .lab-card .desc b{color:var(--ink);}
+  .crate-lab{text-align:center; font-size:.68rem; letter-spacing:1px; text-transform:uppercase; color:var(--muted); font-weight:700; margin:12px 0 8px;}
+  .vinyls{display:flex; gap:10px; flex-wrap:wrap; justify-content:center;}
+  .vrec{text-align:center;}
+  .vrec .nm{font-size:.8rem; font-weight:700; margin-top:5px;}
+  .vrec .yr{font-size:.66rem; color:var(--muted);}
+
+  /* CH · cultural passwords (tabbed collections) */
+  .pw-tabs{display:flex; gap:6px; flex-wrap:wrap; justify-content:center; margin-bottom:10px;}
+  .ptab{border:2px solid var(--line); background:#fff; border-radius:999px; padding:5px 13px; cursor:pointer; font:inherit; font-weight:700; font-size:.78rem; color:var(--ink); transition:.2s;}
+  .ptab:hover{transform:translateY(-2px);} .ptab.on{border-color:var(--local); background:var(--local-soft); color:var(--local2);}
+  .pw-box{background:#fff; border:1px solid var(--line); border-radius:12px; padding:14px 16px;}
+  .pw-head{display:flex; align-items:baseline; justify-content:space-between; margin-bottom:10px; flex-wrap:wrap; gap:6px;}
+  .pw-head .pc{font-family:'Fraunces',serif; font-weight:600; font-size:1.1rem;}
+  .pw-head .pl{font-size:.72rem; color:var(--coral); font-weight:700;}
+  .pw-list{display:grid; grid-template-columns:1fr 1fr; gap:6px 18px;}
+  @media(max-width:520px){.pw-list{grid-template-columns:1fr;}}
+  .pw-row{display:flex; justify-content:space-between; border-bottom:1px dashed var(--line); padding:4px 0; font-size:.82rem;}
+  .pw-row .pn{font-weight:600;} .pw-row .ps{color:var(--muted); font-weight:700; font-size:.74rem;}
+  .did-know{margin-top:11px; background:var(--local-soft); border:1px solid #d8c2ee; border-left:4px solid var(--local); border-radius:12px;
+    padding:10px 15px; font-size:clamp(.74rem,1.3vw,.86rem); color:#4a5568; line-height:1.45;}
+  .did-know b{color:var(--local2);}
+
+  /* CH · the local jukebox */
+  .jb-tabs{display:flex; gap:6px; flex-wrap:wrap; justify-content:center; margin-bottom:11px;}
+  .jtab{border:2px solid var(--line); background:#fff; border-radius:999px; padding:5px 14px; cursor:pointer; font:inherit; font-weight:700; font-size:.78rem; color:var(--ink); transition:.2s;}
+  .jtab:hover{transform:translateY(-2px);} .jtab.on{border-color:var(--local); background:var(--local-soft); color:var(--local2);}
+  .jb-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:10px;}
+  @media(max-width:560px){.jb-grid{grid-template-columns:repeat(2,1fr);}}
+  .jcard{background:#fff; border:1px solid var(--line); border-left:4px solid var(--jc); border-radius:12px; padding:11px 14px; text-align:center;
+    box-shadow:0 3px 10px rgba(150,120,190,.07);}
+  .jcard .jn{font-family:Georgia,serif; font-weight:800; font-size:1.15rem; line-height:1; color:var(--ink);}
+  .jcard .jsay{font-family:'Courier New',monospace; font-size:.68rem; color:var(--muted); margin-top:3px;}
+  .jcard .jm{font-style:italic; font-size:.8rem; color:var(--jc); margin-top:5px;}
+
+  /* CH · fame fades (Arya vs Khaleesi) */
+  /* CH · fame fades — one-hit-wonder timeline */
+  .ohw-line{position:relative; margin:6px 0 4px; padding:0 2%;}
+  .ohw-track{position:absolute; top:26px; left:5%; right:5%; height:3px; border-radius:2px;
+    background:linear-gradient(90deg,#8a5bb0,#e8788c);}
+  .ohw-markers{display:flex; justify-content:space-between; position:relative;}
+  .ohw-m{cursor:pointer; text-align:center; flex:1;}
+  .ohw-dot{font-size:1.5rem; width:52px; height:52px; line-height:52px; margin:0 auto; border-radius:50%;
+    background:#fff; border:3px solid var(--line); transition:.2s;}
+  .ohw-m.on .ohw-dot{border-color:var(--local); transform:scale(1.12); box-shadow:0 6px 16px rgba(138,91,176,.24);}
+  .ohw-yr{font-size:.66rem; color:var(--muted); margin-top:4px;}
+  .ohw-nm{font-size:.76rem; font-weight:700;}
+  .ohw-info{display:none; margin-top:14px; background:#fff; border:1px solid var(--line); border-radius:12px; padding:13px 16px;}
+  .ohw-info.on{display:block;}
+  .ohw-h{font-weight:800; font-size:1.05rem;}
+  .ohw-root{font-size:.66rem; font-weight:800; text-transform:uppercase; letter-spacing:.5px; margin-left:6px;}
+  .ohw-ev{font-style:italic; font-size:.82rem; color:#5a6472; margin:3px 0 11px;}
+  .ohw-stats{display:flex; gap:22px; flex-wrap:wrap; align-items:center;}
+  .ohw-st{text-align:center;}
+  .ohw-st .v{font-size:1.3rem; font-weight:800; line-height:1;}
+  .ohw-st .l{font-size:.62rem; color:var(--muted); margin-top:2px;}
+  .ohw-ar{font-size:1.2rem; color:#c0c8d2;}
+  .ohw-tag{padding:4px 12px; border:1.5px solid; border-radius:20px; font-size:.68rem; font-weight:700;}
+
+  /* CH · Cormac's wishlist */
+  .reqs{display:flex; flex-direction:column; gap:10px;}
+  .req{display:flex; gap:14px; align-items:center; background:#fff; border:1px solid var(--line); border-left:4px solid var(--local); border-radius:12px; padding:12px 16px;}
+  .req .ri{font-size:1.7rem; flex:0 0 auto;}
+  .req>div:last-child{flex:1;}
+  .req .rh{display:inline; font-family:'Fraunces',serif; font-weight:600; font-size:1rem;}
+  .req .rbig{display:inline-block; font-family:'Fraunces',serif; font-weight:700; font-size:1.05rem; color:var(--local2); margin-left:8px;}
+  .req .rd{font-size:.8rem; color:#5a6472; line-height:1.4; margin-top:3px;}
+
+  .foot{flex:0 0 auto; text-align:center; margin-top:clamp(8px,1.4vh,14px); display:flex; align-items:center; justify-content:center; gap:16px; flex-wrap:wrap;}
+  .foot .pageno{font-family:'Fraunces',serif; font-style:italic; color:var(--muted); font-size:.82rem;}
+  .foot a{font-family:'Caveat',cursive; font-size:1.4rem; text-decoration:none; color:var(--global2);}
+  @media(max-height:620px){ .desk{height:auto; max-height:none; overflow:visible;} }
+</style>
+</head>
+<body>
+
+<div class="notes">
+  <span style="top:10%;left:8%;color:#8a5bb0;font-size:1.4rem;">♪</span>
+  <span style="top:18%;left:34%;color:#f0a020;font-size:1.4rem;animation-delay:.8s;">♫</span>
+  <span style="top:70%;left:4%;color:#4a9bd4;font-size:1.6rem;animation-delay:1.2s;">♩</span>
+  <span style="top:84%;left:40%;color:#e8788c;font-size:1.3rem;animation-delay:.5s;">♬</span>
+  <span style="top:44%;left:2%;color:#3fa787;font-size:1.3rem;animation-delay:1.8s;">♪</span>
+  <span style="top:30%;left:22%;color:#8a5bb0;font-size:1.2rem;animation-delay:2.3s;">♫</span>
+</div>
+<div class="now-badge" onclick="this.classList.toggle('paused')" title="ambient score">
+  <span class="eqbars"><i></i><i></i><i></i><i></i></span>
+  <span class="nb-txt"><small>Now Playing</small>Side B · Cormac</span>
+</div>
+
+<img class="cormac-bg" src="assets/cormac_cut.png" alt="">
+
+<section class="desk">
+  <div class="wrap" style="display:flex;flex-direction:column;flex:1;min-height:0;">
+    <div class="desk-head">
+      <div class="chapter-tag">~ Side B · Why Local ~</div>
+      <h1 class="title">Cormac's Mixing Desk</h1>
+      <p class="thesis">Cormac answers. This is everything he wants a name to <b>carry home</b>, meaning, roots, a place, played one channel at a time. Listen for what he will not let go.</p>
+    </div>
+
+    <div class="console">
+      <!-- col 1: left stage -->
+      <div class="stage">
+        <div class="stage-top">
+          <div class="stage-now">▶ Now playing · <b id="nowName">Channel 01</b></div>
+          <div class="stage-flip"><button onclick="stepCh(-1)" title="previous">‹</button><button onclick="stepCh(1)" title="next">›</button></div>
+        </div>
+        <div class="stage-body">
+
+          <!-- PANEL 0 · can you say this? (pronunciation quiz) -->
+          <div class="panel on" data-p="0">
+            <div class="p-cormac">"You call these hard to read. I call them home. To me every one of these is easy, I have said them my whole life. Go on, try."</div>
+            <div class="p-title">Can You Say This?</div>
+            <div class="p-sub">Cormac reads each of these without a blink. See if you can, then hear how it really sounds.</div>
+            <div class="say-stage">
+              <div class="say-card" id="sayCard"></div>
+              <div class="say-controls">
+                <button class="say-btn" onclick="sayHint()">💡 Hint</button>
+                <button class="say-btn reveal" onclick="sayReveal()">🔊 Reveal</button>
+                <button class="say-btn" onclick="sayNext()">➡️ Next</button>
+              </div>
+            </div>
+            <div class="say-box" id="sayHintBox"></div>
+            <div class="say-box reveal" id="sayRevealBox"></div>
+            <div class="say-dots" id="sayDots"></div>
+            <div class="p-cap">Easy for those who belong, a puzzle for everyone else. <b>That is not a flaw, it is the password working exactly as intended.</b></div>
+          </div>
+
+          <!-- PANEL 1 · cultural passwords -->
+          <div class="panel" data-p="1">
+            <div class="p-cormac">"Every place has names that instantly say where you are from. They are not failures to travel, they are passwords."</div>
+            <div class="p-title">Cultural Passwords</div>
+            <div class="p-sub">Names that never leave home, and that is exactly why they matter. Tap a country's crate.</div>
+            <div class="pw-tabs" id="pwTabs"></div>
+            <div class="pw-box" id="pwBox"></div>
+            <div class="did-know">💡 <b>Did you know?</b> Some names get erased from the outside. <b>Alexa</b> fell <b>92%</b> after Amazon's Echo took the name in 2014, and <b>Siri</b> dropped <b>93%</b> once Apple claimed it. A global name can be overwritten by a gadget overnight. A rooted local name belongs to no corporation.</div>
+            <div class="p-cap">Say one of these and a stranger knows your street. <b>That belonging is the whole point,</b> a name that carries a home inside it.</div>
+          </div>
+
+          <!-- PANEL 2 · the local jukebox (regional options with meanings) -->
+          <div class="panel" data-p="2">
+            <div class="p-cormac">"And do not think local means short on choice. Every region has its own jukebox full of beautiful names, and each one actually means something. Pick a region, take your pick."</div>
+            <div class="p-title">The Local Jukebox</div>
+            <div class="p-sub">You are not choosing between one local name and the whole world. There are shelves of them. Tap a region.</div>
+            <div class="jb-tabs" id="jbTabs"></div>
+            <div class="jb-grid" id="jbGrid"></div>
+            <div class="p-cap">Freedom, radiance, a star, the great tree, every one of these carries a <b>meaning</b>, not just a sound. <b>Local isn't a compromise, it's a deeper catalogue.</b></div>
+          </div>
+
+          <!-- PANEL 3 · fame fades, roots don't -->
+          <div class="panel" data-p="3">
+            <div class="p-cormac">"Global fame is disposable. The loudest debuts fade the fastest, unless there are real roots underneath."</div>
+            <div class="p-title">Fame Fades, Roots Don't</div>
+            <div class="p-sub">One-hit wonders on a timeline. Tap a name to see how far it fell from its peak.</div>
+            <div class="ohw-line"><div class="ohw-track"></div><div class="ohw-markers" id="ohwMarkers"></div></div>
+            <div class="ohw-info" id="ohwInfo"></div>
+            <div class="p-cap">The loudest debut, <b>Britney</b>, all but vanished (down 93%). The one that lasted, <b>Arya</b>, had real Sanskrit roots under the fame. <b>A borrowed hit is a rental, roots are what you own.</b></div>
+          </div>
+
+          <!-- PANEL 4 · Cormac's wishlist -->
+          <div class="panel" data-p="4">
+            <div class="p-cormac">"So here is my brief for the baby's name, the things that make a name mean something."</div>
+            <div class="p-title">Cormac's Wishlist</div>
+            <div class="p-sub">The qualities he's looking for, each carried by the data.</div>
+            <div class="reqs">
+              <div class="req"><div class="ri">📖</div><div><span class="rh">Carry a meaning</span><span class="rbig">a word, not a sound</span><div class="rd">Saoirse means "freedom." A name that says something roots the baby to a story, not just a chart position.</div></div></div>
+              <div class="req" style="border-left-color:var(--sage)"><div class="ri">🌳</div><div><span class="rh">Hold our roots</span><span class="rbig" style="color:var(--sage)">Gaelic, from home</span><div class="rd">A name from here tells the baby where they come from every time it is spoken. Heritage travels forward, not sideways.</div></div></div>
+              <div class="req" style="border-left-color:var(--orange)"><div class="ri">💎</div><div><span class="rh">Stay uniquely theirs</span><span class="rbig" style="color:var(--orange)">rare, not global</span><div class="rd">Northern Ireland proves distinctiveness is rising. A name that is theirs alone is worth more than one shared by everyone.</div></div></div>
+            </div>
+            <div class="p-cap">Meaning, roots, and something all their own. <b>Those are the traits that make a name a treasure, and the brief he wants for the baby.</b></div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- col 2: channel strip -->
+      <div class="channels">
+        <div class="ch-label">▮▮▮▮▮ 5 channels · tap to play</div>
+        <button class="channel on" data-ch="0" onclick="setCh(0)">
+          <span class="ico">🎤</span><span class="ct"><span class="cn">Can You Say This?</span><span class="cd">easy for those who belong</span></span>
+          <span class="eq"><i></i><i></i><i></i><i></i></span><span class="num">01</span></button>
+        <button class="channel" data-ch="1" onclick="setCh(1)">
+          <span class="ico">🔑</span><span class="ct"><span class="cn">Cultural Passwords</span><span class="cd">names that say home</span></span>
+          <span class="eq"><i></i><i></i><i></i><i></i></span><span class="num">02</span></button>
+        <button class="channel" data-ch="2" onclick="setCh(2)">
+          <span class="ico">🎶</span><span class="ct"><span class="cn">The Local Jukebox</span><span class="cd">so many options, each a meaning</span></span>
+          <span class="eq"><i></i><i></i><i></i><i></i></span><span class="num">03</span></button>
+        <button class="channel" data-ch="3" onclick="setCh(3)">
+          <span class="ico">🌳</span><span class="ct"><span class="cn">Fame Fades, Roots Don't</span><span class="cd">the one-hit rebuttal</span></span>
+          <span class="eq"><i></i><i></i><i></i><i></i></span><span class="num">04</span></button>
+        <button class="channel" data-ch="4" onclick="setCh(4)">
+          <span class="ico">📝</span><span class="ct"><span class="cn">Cormac's Wishlist</span><span class="cd">what he wants in a name</span></span>
+          <span class="eq"><i></i><i></i><i></i><i></i></span><span class="num">05</span></button>
+      </div>
+
+      <!-- col 3: empty spacer that Cormac's fixed background image overlaps -->
+      <div class="cormac-spacer"></div>
+    </div>
+
+    <div class="foot">
+      <span class="pageno">Side B · Cormac · 4 / 7</span>
+      <a href="aria.html">↩ back to Side A</a>
+      <a href="quiz.html">One more round: the listening test →</a>
+    </div>
+  </div>
+</section>
+
+<script>
+/* ============ channel switching ============ */
+const NOW=['Can You Say This?','Cultural Passwords','The Local Jukebox','Fame Fades, Roots Don\'t','Cormac\'s Wishlist'];
+const N=NOW.length;
+let cur=0;
+function setCh(i){
+  cur=(i+N)%N;
+  document.querySelectorAll('.channel').forEach(c=>c.classList.toggle('on', +c.dataset.ch===cur));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('on', +p.dataset.p===cur));
+  document.getElementById('nowName').textContent=`Channel 0${cur+1} · ${NOW[cur]}`;
+}
+function stepCh(d){setCh(cur+d);}
+
+/* ============ CH01 · Can You Say This? (pronunciation quiz) ============ */
+const SAY=[
+  {nm:'Sadhbh',file:'sadhbh',flag:'🇮🇪 Ireland',say:'SIVE (one syllable!)',hint:'Rhymes with a number between four and six.',why:'In Irish, "dh" and "bh" go silent between vowels. Sa-dh-bh becomes "S" + "ive".'},
+  {nm:'Ngaire',file:'ngaire',flag:'🇳🇿 New Zealand',say:'NY-ree',hint:'The first two letters are one sound you already know.',why:'In Māori, "Ng" is a single consonant, the "ng" in "singing", but at the very start.'},
+  {nm:'Frédérique',file:'frederique',flag:'🇨🇦 Canada',say:'fray-day-REEK',hint:"The accents aren't decoration, each one changes a vowel.",why:'In French, "é" sounds like "ay". Three of them make three "ay" sounds.'},
+  {nm:'Caoimhín',file:'caoimhin',flag:'🇮🇪 N. Ireland',say:'KEE-veen',hint:'You know this name, just not in this spelling.',why:'It is "Kevin" in Irish. "aoi" = "ee", "mh" = "v", "ín" = "een".'},
+  {nm:'Ffion',file:'ffion',flag:'🏴 Wales',say:'FEE-on',hint:'In Welsh, one of these letters is lying to you.',why:'In Welsh "ff" = English "f", and a single "f" = English "v". So Ffion = "Fee-on".'}
+];
+// one sound at a time
+var _sayAudio=null;
+function playSay(file){
+  try{
+    if(_sayAudio){ _sayAudio.pause(); _sayAudio.currentTime=0; }
+    _sayAudio=new Audio('assets/'+file+'.wav'); _sayAudio.play().catch(function(){});
+  }catch(e){}
+}
+let sayIdx=0;
+function sayRender(){
+  const d=SAY[sayIdx];
+  document.getElementById('sayCard').innerHTML=`<div class="say-flag">${d.flag} · side ${sayIdx+1} of ${SAY.length}</div>
+    <div class="say-name">${d.nm}</div><div class="say-prompt">Can you say it out loud?</div>`;
+  document.getElementById('sayHintBox').classList.remove('on');
+  document.getElementById('sayRevealBox').classList.remove('on');
+  document.getElementById('sayDots').innerHTML=SAY.map((_,i)=>i===sayIdx?'●':'○').join(' ');
+}
+function sayHint(){const b=document.getElementById('sayHintBox'); b.classList.add('on'); b.innerHTML='💡 '+SAY[sayIdx].hint;}
+function sayReveal(){const d=SAY[sayIdx]; playSay(d.file); const b=document.getElementById('sayRevealBox'); b.classList.add('on');
+  b.innerHTML=`<div class="say-answer">🔊 ${d.say}</div><div class="say-why">${d.why}</div>`;}
+function sayNext(){sayIdx=(sayIdx+1)%SAY.length; sayRender();}
+sayRender();
+
+/* ============ CH02 · cultural passwords ============ */
+const PW={
+  Ireland:['Ireland','55% locked',[['Aoife',88],['Sadhbh',905],['Eoin',74],['Naoise',1086],['Laoise',612],['Aoibhínn',589]]],
+  Scotland:['Scotland','52% locked',[['Innes',1187],['Ruairidh',976],['Struan',540],['Murdo',521],['Munro',654],['Breagha',489]]],
+  'N. Ireland':['Northern Ireland','65% locked',[['Éireann',1414],['Roisé',1373],['Dáithí',892],['Ruadhán',756],['Cianán',623],['Odhrán',498]]],
+  USA:['USA','44% locked',[['Kaylani',312],['Tadeo',245],['Itzel',198],['Anahi',287],['Malani',176],['Ximena',210]]],
+  Canada:['Canada','36% locked',[['Édouard',1106],['Éloi',894],['Ludovic',756],['Frédérique',623],['Noélie',534],['Océane',445]]]
+};
+const pwColors={Ireland:'#3fa787',Scotland:'#8a5bb0','N. Ireland':'#4ab0c8',USA:'#3f8fca',Canada:'#e8788c'};
+document.getElementById('pwTabs').innerHTML=Object.keys(PW).map((k,i)=>
+  `<button class="ptab${i===0?' on':''}" data-k="${k}" onclick="pwSel(this)">${k}</button>`).join('');
+function pwSel(btn){document.querySelectorAll('#pwTabs .ptab').forEach(c=>c.classList.remove('on'));btn.classList.add('on');pwShow(btn.dataset.k);}
+function pwShow(k){
+  const[country,locked,list]=PW[k]; const col=pwColors[k];
+  document.getElementById('pwBox').innerHTML=`<div class="pw-head"><span class="pc" style="color:${col}">${country}</span><span class="pl">${locked} · rarely leaves home</span></div>
+    <div class="pw-list">${list.map(([n,s])=>`<div class="pw-row"><span class="pn">${n}</span><span class="ps">cn ${s}</span></div>`).join('')}</div>`;
+}
+pwShow('Ireland');
+
+/* ============ CH04 · The Local Jukebox (regional options + meanings) ============ */
+const JUKE={
+  Ireland:['#3fa787',[
+    ['Saoirse','SEER-sha','freedom'],['Aoife','EE-fa','beauty, radiance'],
+    ['Niamh','NEEV','bright, radiant'],['Fionn','FYUN','fair, white'],
+    ['Oisín','uh-SHEEN','little deer'],['Sadhbh','SIVE','sweet, goodness']]],
+  Scotland:['#8a5bb0',[
+    ['Ailsa','AIL-sa','elf victory'],['Innes','IN-iss','from the island'],
+    ['Ruairidh','ROO-ree','red king'],['Iona','eye-OH-na','the island'],
+    ['Struan','STROO-an','stream'],['Mhairi','VAH-ree','beloved']]],
+  Wales:['#3f8fca',[
+    ['Ffion','FEE-on','foxglove'],['Rhys','REESS','ardour, enthusiasm'],
+    ['Seren','SEH-ren','star'],['Cerys','KEH-riss','love'],
+    ['Eluned','el-IN-ed','idol, image'],['Dylan','DUH-lan','son of the sea']]],
+  'Māori NZ':['#f0a020',[
+    ['Nikau','NEE-kow','native palm'],['Manaia','ma-NYE-a','guardian spirit'],
+    ['Kauri','KOW-ree','the great tree'],['Aroha','a-ROH-ha','love'],
+    ['Ataahua','a-taa-HOO-a','beautiful'],['Marama','ma-RAH-ma','moon, light']]],
+  'Québec':['#e8788c',[
+    ['Éloi','ay-LWA','chosen one'],['Océane','oh-say-AN','of the ocean'],
+    ['Frédérique','fray-day-REEK','peaceful ruler'],['Ludovic','loo-doh-VEEK','famed warrior'],
+    ['Noélie','no-ay-LEE','born at Christmas'],['Édouard','ay-DWAR','wealthy guardian']]]
+};
+document.getElementById('jbTabs').innerHTML=Object.keys(JUKE).map((k,i)=>
+  `<button class="jtab${i===0?' on':''}" data-k="${k}" onclick="jbSel(this)">${k}</button>`).join('');
+function jbSel(btn){document.querySelectorAll('#jbTabs .jtab').forEach(c=>c.classList.remove('on'));btn.classList.add('on');jbShow(btn.dataset.k);}
+function jbShow(k){
+  const[col,list]=JUKE[k];
+  document.getElementById('jbGrid').innerHTML=list.map(([n,say,mean])=>`<div class="jcard" style="--jc:${col}">
+    <div class="jn">${n}</div><div class="jsay">${say}</div><div class="jm">“${mean}”</div></div>`).join('');
+}
+jbShow('Ireland');
+
+/* ============ CH05 · fame fades (Arya vs Khaleesi) ============ */
+function fameCard(lab,name,root,seq,color,peak,now,drop,stat){
+  const mx=Math.max(...seq);
+  const fb=seq.map(v=>`<div class="fb" style="height:${Math.round(v/mx*40)+4}px;background:${color};"></div>`).join('');
+  return `<div class="fcard"><div class="flab" style="color:${color}">${lab}</div>
+    <div class="fnm">${name}</div><div class="froot">${root}</div>
+    <div class="fbars">${fb}</div>
+    <div style="font-size:.66rem;opacity:.7">${peak} → ${now} · peak to today</div>
+    <div class="fdrop" style="color:${color}">↓${drop}%</div>
+    <div class="fstat">${stat}</div></div>`;
+}
+/* one-hit-wonder timeline */
+const OHW=[
+  {e:'🎤',yr:'1999',nm:'Britney',ev:'Britney Spears drops "…Baby One More Time"',peak:'3,083',py:'2000',now:'217',drop:'93',stat:'❌ basically gone',root:'stage-name reference',c:'#c94f6d'},
+  {e:'💥',yr:'2001',nm:'Nevaeh',ev:'"Heaven" backwards goes viral after an MTV interview',peak:'7,455',py:'2007',now:'3,053',drop:'59',stat:'📉 fading slowly',root:'invented novelty',c:'#d9683f'},
+  {e:'🐉',yr:'2011',nm:'Khaleesi',ev:'Game of Thrones, parents name babies after the dragon queen',peak:'606',py:'2018',now:'422',drop:'30',stat:'⚠️ fading with the show',root:'pure TV reference',c:'#d9a020'},
+  {e:'⚔️',yr:'2011',nm:'Arya',ev:'GoT warrior, and a real Sanskrit / Persian name ("noble")',peak:'3,913',py:'2019',now:'2,691',drop:'31',stat:'✅ still charting',root:'REAL ancient roots',c:'#3fa787'},
+  {e:'❄️',yr:'2013',nm:'Elsa',ev:'Frozen lands, "Let It Go" is inescapable',peak:'1,999',py:'2014',now:'373',drop:'81',stat:'❌ frozen out',root:'movie reference',c:'#c94f6d'}
+];
+function buildOHW(){
+  const box=document.getElementById('ohwMarkers'); if(!box||box._done) return; box._done=true;
+  box.innerHTML=OHW.map((d,i)=>`<div class="ohw-m" id="ohwm${i}" onclick="ohwShow(${i})">
+    <div class="ohw-dot">${d.e}</div><div class="ohw-yr">${d.yr}</div><div class="ohw-nm">${d.nm}</div></div>`).join('');
+  ohwShow(3); // default to Arya, the survivor
+}
+function ohwShow(i){
+  const d=OHW[i];
+  OHW.forEach((_,j)=>document.getElementById('ohwm'+j)?.classList.remove('on'));
+  document.getElementById('ohwm'+i)?.classList.add('on');
+  const box=document.getElementById('ohwInfo'); box.classList.add('on');
+  box.innerHTML=`<div class="ohw-h">${d.e} ${d.nm} <span class="ohw-root" style="color:${d.c}">${d.root}</span></div>
+    <div class="ohw-ev">"${d.ev}"</div>
+    <div class="ohw-stats">
+      <div class="ohw-st"><div class="v" style="color:var(--local2)">${d.peak}</div><div class="l">peak (${d.py})</div></div>
+      <div class="ohw-ar">→</div>
+      <div class="ohw-st"><div class="v">${d.now}</div><div class="l">now (2023)</div></div>
+      <div class="ohw-st"><div class="v" style="color:${d.c}">↓${d.drop}%</div><div class="l">drop</div></div>
+      <span class="ohw-tag" style="border-color:${d.c};color:${d.c}">${d.stat}</span>
+    </div>`;
+}
+
+setTimeout(buildOHW,60);
+</script>
+</body>
+</html>
