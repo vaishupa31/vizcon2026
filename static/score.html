@@ -97,10 +97,6 @@
   .gauge-ends .ge .big{font-family:'Caveat',cursive; font-size:clamp(1rem,1.9vw,1.3rem);}
   .gauge-ends .ge.lo .big{color:var(--global2);} .gauge-ends .ge.hi .big{color:var(--local2);}
   .gauge-ends .ge small{color:var(--muted); display:block;}
-  /* live read-out that updates as you explore the scale */
-  .gauge-readout{flex:0 0 auto; text-align:center; min-height:1.4em; font-size:clamp(.72rem,1.4vw,.9rem); color:var(--ink); font-weight:600;}
-  .gauge-readout b{font-family:'Caveat',cursive; font-size:1.25em; font-weight:700;}
-  .gauge-readout .hint{display:block; font-weight:500; font-style:italic; color:var(--muted); font-size:.82em;}
 
   /* the reading scale — interactive, no layout shift on hover */
   .scale{flex:0 0 auto; display:grid; grid-template-columns:repeat(5,1fr); gap:clamp(4px,.7vw,8px); margin-top:clamp(8px,1.4vh,14px);}
@@ -203,7 +199,7 @@
         <div class="dial-head">
           <div class="dial-kicker">🎚️ Your lens for reading every name ahead</div>
           <div class="dial-title">The Countryness Dial</div>
-          <div class="dial-sub">One number that tells <b>you</b> whether a name is native or global. <b>Hover the levels below</b> to read the dial.</div>
+          <div class="dial-sub">One number that tells <b>you</b> whether a name is native or global.</div>
         </div>
 
         <div class="formula">
@@ -249,7 +245,6 @@
             <div class="ge lo"><span class="big">Global Hit</span><small>sung the same in all 8 countries</small></div>
             <div class="ge hi"><span class="big">Local Treasure</span><small>belongs to a single home</small></div>
           </div>
-          <div class="gauge-readout" id="readout">Hover a level to swing the needle →</div>
         </div>
 
         <div class="scale" id="scale">
@@ -275,10 +270,8 @@
   // Interactive dial: hover/tap a level → swing the needle to that zone + highlight the card.
   (function(){
     var needle  = document.getElementById('needle');
-    var readout = document.getElementById('readout');
     var cards   = Array.prototype.slice.call(document.querySelectorAll('#scale .sc'));
     var restAngle = -72;                 // needle rests toward the global end
-    var restText  = 'Hover a level to swing the needle →';
 
     function setNeedle(angle){ needle.setAttribute('transform', 'rotate(' + angle + ' 220 185)'); }
 
@@ -286,13 +279,10 @@
       cards.forEach(function(c){ c.classList.remove('active'); });
       card.classList.add('active');
       setNeedle(parseFloat(card.getAttribute('data-angle')));
-      readout.innerHTML = '<b>' + card.getAttribute('data-label') + '</b>'
-                        + '<span class="hint">' + card.getAttribute('data-note') + '</span>';
     }
     function clearAll(){
       cards.forEach(function(c){ c.classList.remove('active'); });
       setNeedle(restAngle);
-      readout.textContent = restText;
     }
 
     cards.forEach(function(card){
@@ -300,6 +290,7 @@
       card.addEventListener('click',      function(){ activate(card); });   // tap on touch
       card.addEventListener('mouseleave', clearAll);
     });
+    // leaving the whole scale row resets the dial
     document.getElementById('scale').addEventListener('mouseleave', clearAll);
   })();
 </script>
