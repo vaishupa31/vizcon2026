@@ -191,17 +191,18 @@
     padding:10px 15px; font-size:clamp(.74rem,1.3vw,.86rem); color:#4a5568; line-height:1.45;}
   .did-know b{color:var(--global2);}
   /* devil-horn Lucifer highlight — the BOX grows its own horns */
-  .did-know.devil{position:relative; margin-top:20px; background:linear-gradient(135deg,#fff1f0,#ffe1de);
+  .did-know.devil{position:relative; margin-top:30px; background:linear-gradient(135deg,#fff1f0,#ffe1de);
     border:1.5px solid #e0645c; border-left:4px solid #d1342b; box-shadow:0 6px 18px rgba(209,52,43,.18); overflow:visible;}
   .did-know.devil b{color:#b71c1c;}
-  /* two curved horns rising from the top edge of the box */
-  .did-know.devil::before,
-  .did-know.devil::after{content:""; position:absolute; top:-15px; width:20px; height:20px;
-    background:#d1342b; z-index:-1;}
-  .did-know.devil::before{left:20px; border-radius:0 100% 0 60%; transform:rotate(-18deg);
-    box-shadow:0 2px 4px rgba(183,28,28,.35);}
-  .did-know.devil::after{right:20px; border-radius:100% 0 60% 0; transform:rotate(18deg);
-    box-shadow:0 2px 4px rgba(183,28,28,.35);}
+  /* two triangular SVG devil horns rising from the top corners */
+  .did-know.devil .horn{position:absolute; top:-28px; z-index:3; width:36px; height:36px; pointer-events:none;
+    filter:drop-shadow(0 2px 2px rgba(140,20,20,.3));}
+  .did-know.devil .horn.l{left:18px;}
+  .did-know.devil .horn.r{right:18px; transform:scaleX(-1);}
+  /* devil tail curling off the bottom-right */
+  .did-know.devil .tail{position:absolute; bottom:-14px; right:-6px; z-index:3; width:46px; height:40px; pointer-events:none;
+    filter:drop-shadow(0 2px 2px rgba(140,20,20,.25));}
+
 
   /* CH · Aria's requirements (former liner notes) */
   .reqs{display:flex; flex-direction:column; gap:10px;}
@@ -339,12 +340,12 @@
 
           <!-- PANEL 3 · turning up the volume (media effect) -->
           <div class="panel" data-p="3">
-            <div class="p-aria">"Every louder signal, radio, TV, the internet, pulls our names closer together. That is the current I want carrying theirs."</div>
+            <div class="p-aria">"Every louder signal, radio, TV, the internet, pulls our names closer together. That is the current I want the baby's name riding on."</div>
             <div class="p-title">Turning Up the Volume</div>
             <div class="p-sub">From silent films to TikTok, each media revolution amplified names across borders. The louder the shared signal, the more our playlists sync up.</div>
             <div class="vol-grid" id="volGrid"></div>
             <div class="vol-foot" id="volFoot"></div>
-            <div class="did-know devil"><b>Did you know?</b> For years, <b>zero</b> babies were named <b>Lucifer</b>. Then Netflix's <em>Lucifer</em> (2016) rebranded the devil as a charming lead, and the name went from mute to a peak of <b>77</b>. One loud enough signal can move a line no one dared cross.</div>
+            <div class="did-know devil"><svg class="horn l" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><linearGradient id="hgL" x1="0.1" y1="1" x2="0.7" y2="0.1"><stop offset="0" stop-color="#a11316"/><stop offset="0.55" stop-color="#e11d1d"/><stop offset="1" stop-color="#ff7a7a"/></linearGradient></defs><path d="M40 98 C 30 70, 26 40, 34 14 L 40 6 C 44 10, 46 14, 46 20 C 54 46, 66 74, 90 98 Z" fill="url(#hgL)"/><path d="M40 16 C 36 42, 44 70, 66 90" fill="none" stroke="#ffc2c2" stroke-width="5" stroke-linecap="round" opacity="0.55"/></svg><svg class="horn r" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><linearGradient id="hgR" x1="0.1" y1="1" x2="0.7" y2="0.1"><stop offset="0" stop-color="#a11316"/><stop offset="0.55" stop-color="#e11d1d"/><stop offset="1" stop-color="#ff7a7a"/></linearGradient></defs><path d="M40 98 C 30 70, 26 40, 34 14 L 40 6 C 44 10, 46 14, 46 20 C 54 46, 66 74, 90 98 Z" fill="url(#hgR)"/><path d="M40 16 C 36 42, 44 70, 66 90" fill="none" stroke="#ffc2c2" stroke-width="5" stroke-linecap="round" opacity="0.55"/></svg><svg class="tail" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M2 8 C 44 6, 74 22, 76 54 C 77 74, 58 84, 46 74 C 38 67, 44 55, 54 60" fill="none" stroke="#d1342b" stroke-width="9" stroke-linecap="round"/><path d="M52 88 L 38 64 L 66 66 Z" fill="#d1342b"/></svg><b>Did you know?</b> For years, <b>zero</b> babies were named <b>Lucifer</b>. Then Netflix's <em>Lucifer</em> (2016) rebranded the devil as a charming lead, and the name went from mute to a peak of <b>77</b>. One loud enough signal can move a line no one dared cross.</div>
           </div>
 
           <!-- PANEL 4 · Aria's rider (former wishlist) -->
