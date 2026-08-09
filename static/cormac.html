@@ -218,6 +218,9 @@
   .ug-who{font-family:'Fraunces',serif; font-weight:600; font-size:clamp(1.05rem,2vw,1.3rem); margin:2px 0 3px; color:var(--ink);}
   .ug-pct{font-family:'Fraunces',serif; font-weight:700; font-size:clamp(2rem,4.4vw,2.8rem); line-height:1;}
   .ug-side.rising .ug-pct{color:var(--local2);} .ug-side.slipping .ug-pct{color:var(--coral);}
+  .ug-pctlab{font-size:.6rem; letter-spacing:.3px; text-transform:uppercase; color:#7a8494; font-weight:700; margin-top:3px;}
+  .ug-bars{position:relative;}
+  .ug-scale{font-size:.55rem; color:#9aa3b0; text-align:right; margin:-4px 0 6px; letter-spacing:.3px;}
   .ug-bars{display:flex; align-items:flex-end; justify-content:center; gap:clamp(2px,.5vw,4px); height:clamp(50px,8vh,72px); margin:10px 0 8px;}
   .ug-b{flex:1; max-width:16px; border-radius:3px 3px 0 0;}
   .ug-note{font-size:clamp(.68rem,1.2vw,.78rem); color:#5a6472; line-height:1.35;}
@@ -340,25 +343,25 @@
           <div class="panel" data-p="3">
             <div class="p-cormac">"Everyone says local names are slipping, and that is exactly the drift I mean to fight."</div>
             <div class="p-title">The Underground Is Growing</div>
-            <div class="p-sub">Two neighbours, opposite directions. How much of each year's naming stays distinctly local, 2010 to 2023.</div>
+            <div class="p-sub">Each bar is the <b>share of a country's names that stay distinctly local</b> that year (names barely used anywhere else). Two neighbours, opposite directions, 2010&ndash;2023.</div>
             <div class="ug-compare">
               <div class="ug-side rising">
-                <div class="ug-tag">RISING</div>
+                <div class="ug-tag">HOLDING STRONG</div>
                 <div class="ug-who">Northern Ireland</div>
-                <div class="ug-pct">+38%</div>
-                <div class="ug-bars" id="ugBarsNI"></div>
-                <div class="ug-note">More parents reaching for <b>rooted, local names</b> every year. Distinctiveness is not fading here, it is being chosen.</div>
+                <div class="ug-pct">~26%</div>
+                <div class="ug-pctlab">of its names stay local &middot; peaked at 30% in 2019</div>
+                <div class="ug-bars" id="ugBarsNI"></div><div class="ug-scale">2010 &rarr; 2023 &middot; bars scaled 0&ndash;32%</div>
+                <div class="ug-note">Roughly <b>1 in 4 names</b> here is distinctly local, and that share is holding, even rising. Distinctiveness is being chosen.</div>
               </div>
               <div class="ug-side slipping">
                 <div class="ug-tag">SLIPPING</div>
                 <div class="ug-who">Ireland</div>
-                <div class="ug-pct">&minus;52%</div>
-                <div class="ug-bars" id="ugBarsIE"></div>
-                <div class="ug-note">The same global hits crowding in, year on year. This is the drift <b>I do not want for our child.</b></div>
+                <div class="ug-pct">18% &rarr; 11%</div>
+                <div class="ug-pctlab">local share fell by more than a third</div>
+                <div class="ug-bars" id="ugBarsIE"></div><div class="ug-scale">2010 &rarr; 2023 &middot; bars scaled 0&ndash;32%</div>
+                <div class="ug-note">The same global hits crowding in, year on year, the local share keeps shrinking. This is the drift <b>I do not want for our child.</b></div>
               </div>
             </div>
-            <div class="ug-crate-lab">&#9670; The underground crate &middot; rooted names climbing the charts since 2010</div>
-            <div class="ug-crate" id="ugCrate"></div>
             <div class="p-cap">One neighbour proves local can rise. <b>I want us on that side of the line,</b> a name that keeps its roots even as the charts pull the other way.</div>
           </div>
 
@@ -507,28 +510,19 @@ function lcShow(k){
 lcShow('Ireland');
 
 /* ============ CH03 · The Underground Is Growing (NI rising vs Ireland slipping) ============ */
-const NI=[70,72,72,80,67,68,83,82,83,91,85,94,75,78];   // 2010-2023, cn>=50 count
-const IE=[113,119,119,103,108,96,99,91,64,63,65,72,55,59];
+const NI=[24.1,25.5,24.7,25.6,23.1,22.5,26.1,26.8,24.6,30.3,27.6,27.5,23.7,25.6];  // 2010-2023, % of names that stay local (cn>=50)
+const IE=[18.2,18.1,19.5,16.7,18.3,16.5,16.8,15.9,12.1,11.8,13.2,14.5,10.4,11.3];
 function ugMiniBars(vals, rising){
-  const mx=Math.max(...vals), mn=Math.min(...vals);
+  const SCALE=32;                                   // shared 0-32% window so both sides compare fairly
   return vals.map((v,i)=>{
-    const h=Math.round((v-mn)/(mx-mn)*100*.8)+18;
-    // rising: darken toward the end; slipping: fade toward the end
+    const h=Math.max(Math.round(v/SCALE*100),6);
     const t=i/(vals.length-1);
-    const col = rising ? `rgba(111,74,156,${0.45+0.55*t})` : `rgba(232,120,140,${0.85-0.5*t})`;
-    return `<span class="ug-b" style="height:${h}%;background:${col}"></span>`;
+    const col = rising ? `rgba(111,74,156,${0.5+0.5*t})` : `rgba(232,120,140,${0.9-0.5*t})`;
+    return `<span class="ug-b" style="height:${h}%;background:${col}" title="${vals[i]}%"></span>`;
   }).join('');
 }
 document.getElementById('ugBarsNI').innerHTML = ugMiniBars(NI, true);
 document.getElementById('ugBarsIE').innerHTML = ugMiniBars(IE, false);
-const UG_CRATE=[
-  ['Fiadh','2014'],['Saoirse','2010'],['Ríoghnach','2016'],['Oisín','2011'],
-  ['Bláthnaid','2015'],['Tadhg','2012'],['Éabha','2013'],['Cillian','2011']
-];
-function ugDisc(){return `<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="#e7d8f5"/><circle cx="50" cy="50" r="30" fill="none" stroke="#c9b0e6" stroke-width="1.4"/><circle cx="50" cy="50" r="14" fill="#b79ad4"/><circle cx="50" cy="50" r="4" fill="#f6effb"/></svg>`;}
-document.getElementById('ugCrate').innerHTML = UG_CRATE.map(([n,y])=>
-  `<div class="ug-disc-item"><div class="ug-disc">${ugDisc()}</div><div class="ug-dn">${n}</div><div class="ug-dy">since ${y}</div></div>`).join('');
-
 /* ============ CH05 · fame fades (Arya vs Khaleesi) ============ */
 function fameCard(lab,name,root,seq,color,peak,now,drop,stat){
   const mx=Math.max(...seq);
